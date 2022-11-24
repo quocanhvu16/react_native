@@ -9,6 +9,10 @@ import {
   Button,
 } from 'react-native';
 import {React} from 'react';
+import {Dimensions} from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const background = {
   uri: 'https://w7.pngwing.com/pngs/235/933/png-transparent-blue-blue-abstract-graphics-blue-background-texture-angle-triangle.png',
@@ -20,7 +24,10 @@ const image = {
 export default function App() {
   return (
     <View style={styles.container}>
-      <ImageBackground source={background} style={styles.background}>
+      <ImageBackground
+        source={background}
+        resizeMode="cover"
+        style={styles.background}>
         <View style={styles.top}>
           <Image source={image} style={styles.image} />
           <Text style={styles.smarthome}>SMART HOME</Text>
@@ -54,11 +61,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: 'black',
   },
   background: {
-    flex: 1,
-    resizeMode: 'cover',
+    width: windowWidth,
+    height: windowHeight,
   },
   top: {
     flexDirection: 'row',
