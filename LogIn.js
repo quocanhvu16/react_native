@@ -20,6 +20,12 @@ const background = {
 const image = {
   uri: 'https://play-lh.googleusercontent.com/j2zV7iXJAQnxrWBCG8rhujQDZ0peiCwlEthTlCrR5Uoumge9ZL9wjxs0ooUd2jtkSbg=w600-h300-pc0xffffff-pd',
 };
+const user = {
+  uri: 'https://cdn-icons-png.flaticon.com/512/25/25634.png',
+};
+const pass = {
+  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ4RGghRmM4WGtYh7ptc7w59YZhVy4kurv-Q&usqp=CAU',
+};
 
 export default function App() {
   return (
@@ -32,26 +38,32 @@ export default function App() {
           <Image source={image} style={styles.image} />
           <Text style={styles.smarthome}>SMART HOME</Text>
         </View>
-        <View style={{marginTop: 50, marginHorizontal: 40}}>
-          <TextInput
-            style={[styles.input, {marginBottom: 15}]}
-            placeholder="Số điện thoại"
-            keyboardType="numeric"
-            placeholderTextColor={'black'}
-          />
-          <TextInput
-            secureTextEntry
-            style={styles.input}
-            placeholder="Mật Khẩu"
-            placeholderTextColor={'black'}
-          />
+        <View style={{marginTop: 50, marginHorizontal: 30}}>
+          <View style={styles.input_text}>
+            <Image source={user} style={styles.icon} />
+            <TextInput
+              style={[styles.input, {marginBottom: 20}]}
+              placeholder="Số điện thoại"
+              keyboardType="numeric"
+              placeholderTextColor={'black'}
+            />
+          </View>
+          <View style={styles.input_text}>
+            <Image source={pass} style={styles.icon} />
+            <TextInput
+              secureTextEntry
+              style={[styles.input, {marginBottom: 20}]}
+              placeholder="Mật Khẩu"
+              placeholderTextColor={'black'}
+            />
+          </View>
           <Text style={styles.forgetpass}>Quên mật khẩu ?</Text>
         </View>
         <View style={styles.button1}>
           <Button title="Đăng nhập" color="#3f6eb9" />
         </View>
         <View style={styles.button2}>
-          <Button title="Đăng ký" color="#3f6eb9" />
+          <Button title="Đăng ký" color="#f03b2c" />
         </View>
       </ImageBackground>
     </View>
@@ -83,15 +95,16 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
+    width: 270,
     borderWidth: 1,
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#e6e6e6',
     color: 'black',
     borderRadius: 10,
   },
   forgetpass: {
     fontSize: 15,
-    color: 'black',
+    color: 'blue',
     marginTop: 10,
     alignSelf: 'flex-end',
   },
@@ -102,5 +115,15 @@ const styles = StyleSheet.create({
   button2: {
     marginHorizontal: 120,
     paddingTop: 20,
+  },
+  input_text: {
+    flexDirection: 'row',
+  },
+  icon: {
+    height: 25,
+    width: 25,
+    position: 'relative',
+    top: 6,
+    right: 4,
   },
 });
