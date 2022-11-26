@@ -70,7 +70,7 @@ const SignUp = ({ navigation }) => {
                         <Text style={styles.forgetpass}>Quên mật khẩu ?</Text>
                     </View>
                     <View style={styles.button}>
-                        <Button title="Tạo tài khoản" color="#f03b2c" />
+                        <Button onPress={() => navigation.navigate('SignIn')} title="Tạo tài khoản" color="#f03b2c" />
                     </View>
                     <View style={[styles.input_text, { justifyContent: 'center' }]}>
                         <Text style={styles.text}>Bạn đã có sẵn tài khoản?</Text>
