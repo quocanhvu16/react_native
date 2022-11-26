@@ -46,7 +46,7 @@ const Dashboard = ({navigation}) => {
           <Room image={image2} name="Kitchen" />
           <Room image={image3} name="Bed Room" />
           <Room image={image1} name="Living Room" />
-          <Room image={image2} name="Kitchen11" />
+          <Room image={image2} name="Kitchen13" />
         </View>
       </ScrollView>
     </View>
