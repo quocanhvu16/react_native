@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import {isValidSdt, isValidPass} from '../Validation/Validate';
+import {isValidSdt, isValidPass} from '../../Validation/Validate';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

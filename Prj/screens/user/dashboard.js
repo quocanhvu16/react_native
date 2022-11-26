@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Dimensions, ScrollView} from 'react-native';
-import Room from '../components/room';
+import Room from '../../components/user/room';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -47,7 +47,7 @@ const Dashboard = ({navigation}) => {
           <Room image={image3} name="Bed Room" />
           <Room image={image1} name="Living Room" />
           <Room image={image2} name="Kitchen" />
-          <Room image={image3} name="Bed Room" />
+          <Room image={image2} name="Kitchen13" />
         </View>
       </ScrollView>
     </View>
