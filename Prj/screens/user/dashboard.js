@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Dimensions, ScrollView} from 'react-native';
-import Room from '../components/room';
+import Room from '../../components/user/room';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
