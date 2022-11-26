@@ -7,33 +7,21 @@ import {
   Image,
   Button,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import {isValidSdt, isValidPass} from '../../Validation/Validate';
+import {background, image, home, pass} from '../../image/image';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const background = {
-  uri: 'https://w7.pngwing.com/pngs/235/933/png-transparent-blue-blue-abstract-graphics-blue-background-texture-angle-triangle.png',
-};
-const image = {
-  uri: 'https://play-lh.googleusercontent.com/j2zV7iXJAQnxrWBCG8rhujQDZ0peiCwlEthTlCrR5Uoumge9ZL9wjxs0ooUd2jtkSbg=w600-h300-pc0xffffff-pd',
-};
-const user = {
-  uri: 'https://cdn-icons-png.flaticon.com/512/25/25634.png',
-};
-const pass = {
-  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ4RGghRmM4WGtYh7ptc7w59YZhVy4kurv-Q&usqp=CAU',
-};
 
 const SignIn = ({navigation}) => {
   //states for validating
-  const [sdtErr, setSdtErr] = useState('');
+  const [IDErr, setIDErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
   //states to store sdt, pass
-  const [sdt, setSdt] = useState('');
+  const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   return (
     <View style={styles.container}>
@@ -47,19 +35,19 @@ const SignIn = ({navigation}) => {
         </View>
         <View style={{marginTop: 50, marginHorizontal: 30}}>
           <View style={styles.input_text}>
-            <Image source={user} style={styles.icon} />
+            <Image source={home} style={styles.icon} />
             <TextInput
               onChangeText={text => {
-                setSdt(text);
+                setID(text);
               }}
               style={[styles.input, {marginBottom: 0}]}
-              placeholder="Số điện thoại"
+              placeholder="ID"
               keyboardType="numeric"
               placeholderTextColor={'black'}
             />
           </View>
           <View style={{marginVertical: 10, marginLeft: 25}}>
-            <Text style={{color: 'red', fontSize: 10}}>{sdtErr}</Text>
+            <Text style={{color: 'red', fontSize: 10}}>{IDErr}</Text>
           </View>
           <View style={styles.input_text}>
             <Image source={pass} style={styles.icon} />
@@ -84,17 +72,15 @@ const SignIn = ({navigation}) => {
             title="Đăng nhập"
             color="#3f6eb9"
             onPress={() => {
-              setSdtErr(
-                isValidSdt(sdt) == true
-                  ? ''
-                  : 'Số điện thoại bạn nhập không đúng',
+              setIDErr(
+                isValidSdt(ID) == true ? '' : 'ID của bạn nhập không đúng',
               );
               setPasswordErr(
                 isValidPass(password) == true
                   ? ''
                   : 'Mật khẩu bạn nhập không đúng',
               );
-              if (isValidSdt(sdt) && isValidPass(password)) {
+              if (isValidSdt(ID) && isValidPass(password)) {
                 navigation.navigate('Dashboard');
               }
             }}

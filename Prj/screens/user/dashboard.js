@@ -1,16 +1,10 @@
 import React from 'react';
 import {View, Text, Dimensions, ScrollView} from 'react-native';
 import Room from '../../components/user/room';
+import {image1, image2, image3} from '../../image/image'
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-
-const image1 =
-  'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/emapeter-1643063054.jpeg';
-const image2 =
-  'https://talkclass.edu.vn/wp-content/uploads/2018/06/tu-vung-tieng-anh-chu-de-bep.jpg';
-const image3 =
-  'https://image.winudf.com/v2/image1/Y29tLmFwcHRyb25pay5iZWF1dGlmdWxraXRjaGVuaWRlYXNfc2NyZWVuXzBfMTU1Njc1NzMyNV8wODM/screen-0.jpg?fakeurl=1&type=.webp';
 
 const Dashboard = ({navigation}) => {
   return (
