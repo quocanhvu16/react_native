@@ -1,8 +1,8 @@
 export const isValidSdt = sdt => {
-  if (sdt.length > 11 || sdt.length < 10) {
-    return false;
-  } else {
+  if (sdt.length == 4) {
     return true;
+  } else {
+    return false;
   }
 };
 export const isValidPass = password => {

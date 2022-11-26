@@ -12,24 +12,10 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import {image, user, home, pass, retypepass, background} from '../../image/image';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const background = {
-    uri: 'https://w7.pngwing.com/pngs/235/933/png-transparent-blue-blue-abstract-graphics-blue-background-texture-angle-triangle.png',
-};
-const image = {
-    uri: 'https://play-lh.googleusercontent.com/j2zV7iXJAQnxrWBCG8rhujQDZ0peiCwlEthTlCrR5Uoumge9ZL9wjxs0ooUd2jtkSbg=w600-h300-pc0xffffff-pd',
-};
-const user = {
-    uri: 'https://cdn-icons-png.flaticon.com/512/25/25634.png',
-};
-const pass = {
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ4RGghRmM4WGtYh7ptc7w59YZhVy4kurv-Q&usqp=CAU',
-};
-const retypepass = {
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQThNElIzEYiOyISU7DBH7FmG-jfZhf-OWAVA&usqp=CAU',
-};
 
 const SignUp = ({ navigation }) => {
         return (
@@ -44,7 +30,15 @@ const SignUp = ({ navigation }) => {
                             <Image source={user} style={styles.icon} />
                             <TextInput
                                 style={[styles.input, { marginBottom: 20 }]}
-                                placeholder="Số điện thoại"
+                                placeholder="Họ và tên"
+                                placeholderTextColor={'black'}
+                            />
+                        </View>
+                        <View style={styles.input_text}>
+                            <Image source={home} style={styles.icon} />
+                            <TextInput
+                                style={[styles.input, { marginBottom: 20 }]}
+                                placeholder="ID"
                                 keyboardType="numeric"
                                 placeholderTextColor={'black'}
                             />
