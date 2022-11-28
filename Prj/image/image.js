@@ -16,15 +16,18 @@ const pass = {
 const retypepass = {
   uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQThNElIzEYiOyISU7DBH7FmG-jfZhf-OWAVA&usqp=CAU',
 };
-const image1 =
-  'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/emapeter-1643063054.jpeg';
-
-const image2 =
-  'https://talkclass.edu.vn/wp-content/uploads/2018/06/tu-vung-tieng-anh-chu-de-bep.jpg';
-const image3 =
-  'https://image.winudf.com/v2/image1/Y29tLmFwcHRyb25pay5iZWF1dGlmdWxraXRjaGVuaWRlYXNfc2NyZWVuXzBfMTU1Njc1NzMyNV8wODM/screen-0.jpg?fakeurl=1&type=.webp';
-const profile =
-  'https://www.paratime.vn/wp-content/uploads/2019/09/timestudio.vn-corporate-headshot-pricing-01.jpg';
+const image1 = {
+  uri: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/emapeter-1643063054.jpeg',
+}
+const image2 = {
+  uri: 'https://talkclass.edu.vn/wp-content/uploads/2018/06/tu-vung-tieng-anh-chu-de-bep.jpg',
+}
+const image3 = {
+  uri: 'https://image.winudf.com/v2/image1/Y29tLmFwcHRyb25pay5iZWF1dGlmdWxraXRjaGVuaWRlYXNfc2NyZWVuXzBfMTU1Njc1NzMyNV8wODM/screen-0.jpg?fakeurl=1&type=.webp',
+}
+const profile = {
+  uri: 'https://www.paratime.vn/wp-content/uploads/2019/09/timestudio.vn-corporate-headshot-pricing-01.jpg',
+};
 export {
   background,
   image,
