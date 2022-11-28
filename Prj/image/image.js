@@ -11,7 +11,7 @@ const home = {
   uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Home_Icon.svg/2048px-Home_Icon.svg.png',
 };
 const pass = {
-  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ4RGghRmM4WGtYh7ptc7w59YZhVy4kurv-Q&usqp=CAU',
+  uri: 'https://cdn-icons-png.flaticon.com/512/1224/1224191.png',
 };
 const retypepass = {
   uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQThNElIzEYiOyISU7DBH7FmG-jfZhf-OWAVA&usqp=CAU',
@@ -23,7 +23,8 @@ const image2 =
   'https://talkclass.edu.vn/wp-content/uploads/2018/06/tu-vung-tieng-anh-chu-de-bep.jpg';
 const image3 =
   'https://image.winudf.com/v2/image1/Y29tLmFwcHRyb25pay5iZWF1dGlmdWxraXRjaGVuaWRlYXNfc2NyZWVuXzBfMTU1Njc1NzMyNV8wODM/screen-0.jpg?fakeurl=1&type=.webp';
-
+const profile =
+  'https://www.paratime.vn/wp-content/uploads/2019/09/timestudio.vn-corporate-headshot-pricing-01.jpg';
 export {
   background,
   image,
@@ -34,4 +35,5 @@ export {
   image1,
   image2,
   image3,
+  profile,
 };

@@ -11,7 +11,7 @@ export default class Room extends React.Component {
         <View
           style={{
             width: width * 0.41,
-            height: width * 0.55,
+            height: height * 0.272,
             borderRadius: 10,
             backgroundColor: 'white',
             marginTop: 20,

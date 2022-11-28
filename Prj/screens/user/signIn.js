@@ -15,7 +15,6 @@ import {background, image, home, pass} from '../../image/image';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
 const SignIn = ({navigation}) => {
   //states for validating
   const [IDErr, setIDErr] = useState('');
@@ -81,6 +80,7 @@ const SignIn = ({navigation}) => {
                   : 'Mật khẩu bạn nhập không đúng',
               );
               if (isValidSdt(ID) && isValidPass(password)) {
+                alert(`Tai khoan la ${ID} va mat khau la ${password}`);
                 navigation.navigate('Dashboard');
               }
             }}
