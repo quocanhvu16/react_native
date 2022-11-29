@@ -1,14 +1,8 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import {View, Text, Dimensions, ScrollView} from 'react-native';
 import Room from '../../components/user/room';
-import {image1, image2, image3, profile} from '../../image/image';
+import {image1, image2, image3} from '../../image/image';
 import NavBar from '../../components/user/NavBar';
-import NavigationBottom from '../../components/user/NavigationBottom';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -45,7 +39,6 @@ const Dashboard = ({navigation}) => {
           <Room image={image2} name="Kitchen" />
         </View>
       </ScrollView>
-      <NavigationBottom/>
     </View>
   );
 };
