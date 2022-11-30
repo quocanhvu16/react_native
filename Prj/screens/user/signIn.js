@@ -11,11 +11,13 @@ import {
 import React, {useState} from 'react';
 import {isValidSdt, isValidPass} from '../../Validation/Validate';
 import {background, image, home, pass} from '../../image/image';
+import {useNavigation} from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const SignIn = ({navigation}) => {
+const SignIn = () => {
+  const navigation = useNavigation();
   //states for validating
   const [IDErr, setIDErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');

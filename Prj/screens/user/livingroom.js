@@ -1,12 +1,8 @@
 import React from 'react';
 import {Text} from 'react-native';
 
-const Livingroom = () => {
-  return (
-    <Text style={{fontSize: 25, color: 'yellow'}}>
-      This is Livingroom screen
-    </Text>
-  );
+const LivingRoom = () => {
+  return <Text style={{fontSize: 25, color: 'green'}}>This is LIVINGROOM</Text>;
 };
 
-export default Livingroom;
+export default LivingRoom;

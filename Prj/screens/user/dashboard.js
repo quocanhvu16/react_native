@@ -6,7 +6,7 @@ import NavBar from '../../components/user/NavBar';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const Dashboard = ({navigation}) => {
+const Dashboard = () => {
   return (
     <View
       style={{
@@ -28,16 +28,6 @@ const Dashboard = ({navigation}) => {
           <Room image={image2} name="Kitchen" />
           <Room image={image3} name="Bed Room" />
           <Room image={image1} name="Living Room" />
-          <Room image={image2} name="Kitchen" />
-          <Room image={image3} name="Bed Room" />
-          <Room image={image1} name="Living Room" />
-          <Room image={image2} name="Kitchen" />
-          <Room image={image3} name="Bed Room" />
-          <Room image={image1} name="Living Room" />
-          <Room image={image2} name="Kitchen" />
-          <Room image={image3} name="Bed Room" />
-          <Room image={image1} name="Living Room" />
-          <Room image={image2} name="Kitchen" />
         </View>
       </ScrollView>
     </View>

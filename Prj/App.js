@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {MainStackNavigator} from './navigation/StackNavigator';
 import BottomTabNavigator from './navigation/TabNavigator';
 //import DrawerNavigator from './navigation/DrawerNavigator';
-
+import Living from './screens/user/livingroom';
 export default function App() {
   return (
     <NavigationContainer>

@@ -1,13 +1,22 @@
 import React from 'react';
 import {Image, Text, View, Dimensions, TouchableOpacity} from 'react-native';
-import Livingroom from '../../screens/user/livingroom';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+import {useNavigation} from '@react-navigation/native';
 
 const Room = props => {
+  const navigation = useNavigation();
+  const handleOnPress = () => {
+    if (props.name === 'Living Room') {
+      navigation.navigate('Living Room');
+    } else if (props.name === 'Kitchen') {
+      navigation.navigate('Kitchen');
+    } else if (props.name === 'Bed Room') {
+      navigation.navigate('Bed Room');
+    }
+  };
   return (
-    <TouchableOpacity>
-      {/*<TouchableOpacity onPress={() => navigation.navigate('Livingroom')}>*/}
+    <TouchableOpacity onPress={() => handleOnPress()}>
       <View
         style={{
           width: width * 0.94,
