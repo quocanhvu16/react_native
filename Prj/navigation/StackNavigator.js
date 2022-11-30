@@ -6,7 +6,7 @@ import SignIn from '../screens/user/signIn';
 import BottomTabNavigator from './TabNavigator';
 import DrawerNavigator from './DrawerNavigator';
 const Stack = createNativeStackNavigator();
-
+import Livingroom from '../screens/user/livingroom';
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -14,6 +14,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Dashboard" component={BottomTabNavigator} />
+      <Stack.Screen name="Livingroom" component={Livingroom} />
     </Stack.Navigator>
   );
 };

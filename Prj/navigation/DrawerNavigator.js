@@ -11,7 +11,7 @@
 // const DrawerNavigator = () => {
 //   return (
 //     <Drawer.Navigator>
-//       <Drawer.Screen name="Dasboard" component={BottomTabNavigator} />
+//       <Drawer.Screen name="Home" component={BottomTabNavigator} />
 //       <Drawer.Screen name="Notification" component={Notification} />
 //       <Drawer.Screen name="Profile" component={Profile} />
 //     </Drawer.Navigator>

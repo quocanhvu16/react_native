@@ -1,18 +1,13 @@
 import React from 'react';
-import {
-  Image,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
-
+import {Image, Text, View, Dimensions, TouchableOpacity} from 'react-native';
+import Livingroom from '../../screens/user/livingroom';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Room = props => {
   return (
     <TouchableOpacity>
+      {/*<TouchableOpacity onPress={() => navigation.navigate('Livingroom')}>*/}
       <View
         style={{
           width: width * 0.94,
