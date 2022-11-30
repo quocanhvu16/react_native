@@ -22,6 +22,7 @@ const Dashboard = ({navigation}) => {
             flexDirection: 'row',
             flexWrap: 'wrap',
             marginHorizontal: width * 0.03,
+            marginTop: -8,
           }}>
           <Room image={image1} name="Living Room" />
           <Room image={image2} name="Kitchen" />

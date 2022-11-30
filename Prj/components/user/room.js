@@ -5,7 +5,6 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  ImageBackground,
 } from 'react-native';
 
 const width = Dimensions.get('window').width;
@@ -17,29 +16,28 @@ const Room = props => {
       <View
         style={{
           width: width * 0.94,
-          height: height * 0.175,
-          borderRadius: 10,
-          marginTop: 20,
+          height: height * 0.185,
+          marginTop: 15,
         }}>
-        <ImageBackground
+        <Image
           source={props.image}
           style={{
             width: width * 0.94,
-            height: height * 0.175,
-            borderRadius: 40,
+            height: height * 0.185,
+            borderRadius: 15,
           }}
-          resizeMode="cover">
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: 'bold',
-              fontSize: 20,
-              marginLeft: 20,
-              marginTop: 100,
-            }}>
-            {props.name}
-          </Text>
-        </ImageBackground>
+        />
+        <Text
+          style={{
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: 20,
+            position: 'absolute',
+            marginTop: 90,
+            marginLeft: 20,
+          }}>
+          {props.name}
+        </Text>
       </View>
     </TouchableOpacity>
   );

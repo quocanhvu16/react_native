@@ -26,7 +26,7 @@ const image3 = {
   uri: 'https://image.winudf.com/v2/image1/Y29tLmFwcHRyb25pay5iZWF1dGlmdWxraXRjaGVuaWRlYXNfc2NyZWVuXzBfMTU1Njc1NzMyNV8wODM/screen-0.jpg?fakeurl=1&type=.webp',
 };
 const profile = {
-  uri: 'https://www.paratime.vn/wp-content/uploads/2019/09/timestudio.vn-corporate-headshot-pricing-01.jpg',
+  uri: 'https://i.pinimg.com/originals/44/fa/f8/44faf83feb61a540659d50029db4b0ac.jpg',
 };
 export {
   background,

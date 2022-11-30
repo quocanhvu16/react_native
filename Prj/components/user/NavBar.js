@@ -51,24 +51,23 @@ const NavBar = () => {
   return (
     <View
       style={{
-        backgroundColor: '#EEEEEE',
+        backgroundColor: '#b4c7e6',
         height: height * 0.1,
-        borderRadius: 10,
         paddingLeft: 15,
         flexDirection: 'row',
       }}>
-      <View>
-        <Text style={{color: '#999999', fontSize: 13, marginBottom: 0}}>
+      <View style={{paddingRight:35}}>
+        <Text style={{color: 'black', fontSize: 13, marginBottom: 0}}>
           {time}
         </Text>
         <Text style={{color: 'black', fontSize: 30, fontWeight: 'bold'}}>
-          Welcome
+          Welcome, Shanks
         </Text>
       </View>
-      <View style={{justifyContent: 'center', marginLeft: 160}}>
+      <View style={{justifyContent: 'center', marginLeft: 20}}>
         <Image
           source={profile}
-          style={{width: 40, height: 40, borderRadius: 40}}
+          style={{width: 40, height: 40, borderRadius: 20}}
         />
       </View>
     </View>
