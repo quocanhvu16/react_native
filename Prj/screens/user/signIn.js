@@ -66,9 +66,12 @@ const SignIn = () => {
               placeholderTextColor={'black'}
             />
           </View>
-          <View style={{marginVertical: 10, marginLeft: 25}}>
-            <Text style={{color: 'red', fontSize: 10}}>{IDErr}</Text>
-          </View>
+          {keyboardIsShown == false && (
+            <View style={{marginVertical: 10, marginLeft: 25}}>
+              <Text style={{color: 'red', fontSize: 10}}>{IDErr}</Text>
+            </View>
+          )}
+          {keyboardIsShown == true && <View style={{height: 10}} />}
           <View style={styles.input_text}>
             <Image source={pass} style={styles.icon} />
             <TextInput
@@ -99,9 +102,12 @@ const SignIn = () => {
               <Icon name={iconName} size={20} color={'black'} />
             </TouchableOpacity>
           </View>
-          <View style={{marginTop: 10, marginLeft: 25}}>
-            <Text style={{color: 'red', fontSize: 10}}>{passwordErr}</Text>
-          </View>
+          {keyboardIsShown == false && (
+            <View style={{marginTop: 10, marginLeft: 25}}>
+              <Text style={{color: 'red', fontSize: 10}}>{passwordErr}</Text>
+            </View>
+          )}
+          {keyboardIsShown == true && <View style={{height: 10}} />}
           <Text style={styles.forgetpass}>Quên mật khẩu ?</Text>
         </View>
         {keyboardIsShown == false && (
