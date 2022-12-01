@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Dimensions, ScrollView} from 'react-native';
 import Room from '../../components/user/room';
-import {image1, image2, image3} from '../../image/image';
+import {livingRoom, kitchen, bathRoom, bedRoom} from '../../image/image';
 import NavBar from '../../components/user/NavBar';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -24,10 +24,10 @@ const Dashboard = () => {
             marginHorizontal: width * 0.03,
             marginTop: -8,
           }}>
-          <Room image={image1} name="Living Room" />
-          <Room image={image2} name="Kitchen" />
-          <Room image={image3} name="Bed Room" />
-          <Room image={image1} name="Living Room" />
+          <Room image={livingRoom} name="Living Room" />
+          <Room image={kitchen} name="Kitchen" />
+          <Room image={bedRoom} name="Bed Room" />
+          <Room image={bathRoom} name="Bath Room" />
         </View>
       </ScrollView>
     </View>

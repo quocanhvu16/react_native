@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text} from 'react-native';
-
+import RoomName from '../../components/user/RoomName';
 const LivingRoom = () => {
-  return <Text style={{fontSize: 25, color: 'green'}}>This is LIVINGROOM</Text>;
+  return <RoomName name="Living Room" />;
 };
 
 export default LivingRoom;

@@ -56,7 +56,7 @@ const NavBar = () => {
         paddingLeft: 15,
         flexDirection: 'row',
       }}>
-      <View style={{paddingRight:35}}>
+      <View style={{paddingRight: 35}}>
         <Text style={{color: 'black', fontSize: 13, marginBottom: 0}}>
           {time}
         </Text>
