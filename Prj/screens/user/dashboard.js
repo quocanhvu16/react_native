@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, Dimensions, ScrollView} from 'react-native';
 import Room from '../../components/user/room';
 import {livingRoom, kitchen, bathRoom, bedRoom} from '../../image/image';
@@ -12,10 +12,10 @@ const Dashboard = () => {
       style={{
         backgroundColor: '#EEEEEE',
         width: width,
-        height: height,
+        height: height * 0.91,
       }}>
       <NavBar />
-      <ScrollView scrollEnabled={true} style={{height: height * 0.85}}>
+      <ScrollView scrollEnabled={true} style={{}}>
         <View
           style={{
             backgroundColor: '#EEEEEE',
@@ -27,6 +27,9 @@ const Dashboard = () => {
           <Room image={livingRoom} name="Living Room" />
           <Room image={kitchen} name="Kitchen" />
           <Room image={bedRoom} name="Bed Room" />
+          <Room image={bathRoom} name="Bath Room" />
+          <Room image={bathRoom} name="Bath Room" />
+          <Room image={bathRoom} name="Bath Room" />
           <Room image={bathRoom} name="Bath Room" />
         </View>
       </ScrollView>

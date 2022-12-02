@@ -5,6 +5,7 @@ import Profile from '../screens/user/Profile';
 import Notification from '../screens/user/Notification';
 //import DrawerNavigator from './DrawerNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {View, Text} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const HomeName = 'Nhà';
@@ -37,7 +38,27 @@ const BottomTabNavigator = () => {
             if (rn === 'Thông báo') {
               iconName = focused ? 'notifications' : 'notifications-outline';
             }
-            return <Icon name={iconName} color={color} size={size} />;
+            return (
+              <View onPress>
+                <Icon name={iconName} color={color} size={size} />
+                <View
+                  style={{
+                    backgroundColor: 'red',
+                    position: 'absolute',
+                    borderRadius: 10,
+                    width: 15,
+                    height: 15,
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    bottom: 17,
+                    left: 20,
+                  }}>
+                  <Text style={{fontSize: 10, color: 'white'}}>1</Text>
+                </View>
+              </View>
+            );
           },
         })}
       />

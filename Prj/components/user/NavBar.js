@@ -49,27 +49,31 @@ const NavBar = () => {
     setTime(newTime);
   }, 1000);
   return (
-    <View
-      style={{
-        backgroundColor: '#b4c7e6',
-        height: height * 0.1,
-        paddingLeft: 15,
-        flexDirection: 'row',
-      }}>
-      <View style={{paddingRight: 35}}>
-        <Text style={{color: 'black', fontSize: 13, marginBottom: 0}}>
-          {time}
-        </Text>
-        <Text style={{color: 'black', fontSize: 30, fontWeight: 'bold'}}>
-          Welcome, Shanks
-        </Text>
+    <View>
+      <View
+        style={{
+          // backgroundColor: '#b4c7e6',
+          backgroundColor: '#EEEEEE',
+          height: height * 0.1,
+          paddingLeft: 15,
+          flexDirection: 'row',
+        }}>
+        <View style={{paddingRight: 35}}>
+          <Text style={{color: 'black', fontSize: 13, marginBottom: 0}}>
+            {time}
+          </Text>
+          <Text style={{color: 'black', fontSize: 30, fontWeight: 'bold'}}>
+            Welcome, Shanks
+          </Text>
+        </View>
+        <View style={{justifyContent: 'center', marginLeft: 20}}>
+          <Image
+            source={profile}
+            style={{width: 40, height: 40, borderRadius: 20}}
+          />
+        </View>
       </View>
-      <View style={{justifyContent: 'center', marginLeft: 20}}>
-        <Image
-          source={profile}
-          style={{width: 40, height: 40, borderRadius: 20}}
-        />
-      </View>
+      <View style={{height: 1, width: width, backgroundColor: 'black'}} />
     </View>
   );
 };
