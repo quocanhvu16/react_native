@@ -1,14 +1,13 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Dashboard from '../screens/user/dashboard';
-import Profile from '../screens/user/Profile';
 import Notification from '../screens/user/Notification';
 //import DrawerNavigator from './DrawerNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {View, Text} from 'react-native';
+import Profile from '../screens/user/Profile';
 
 const Tab = createBottomTabNavigator();
-const HomeName = 'Nhà';
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
@@ -63,15 +62,15 @@ const BottomTabNavigator = () => {
         })}
       />
       <Tab.Screen
-        name="Cá nhân"
+        name="Cài đặt"
         component={Profile}
         options={({route}) => ({
           tabBarActiveTintColor: 'red',
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
             let rn = route.name;
-            if (rn === 'Cá nhân') {
-              iconName = focused ? 'person' : 'person-outline';
+            if (rn === 'Cài đặt') {
+              iconName = focused ? 'settings' : 'settings-outline';
             }
             return <Icon name={iconName} color={color} size={size} />;
           },

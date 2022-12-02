@@ -1,14 +1,31 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import React from 'react';
-import {Image, Text, View, Dimensions} from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import {profile} from '../../image/image';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const NavBar = () => {
+const NavBar = props => {
+  const offsetValue = useRef(new Animated.Value(0)).current;
+  const scaleValue = useRef(new Animated.Value(1)).current;
+  const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState('');
   const [time, setTime] = useState('');
+  const sendScaleValue = () => {
+    props.dashboardCallback1(scaleValue);
+  };
+  const sendoffSetValue = () => {
+    props.dashboardCallback2(offsetValue);
+  };
   const checkTime = i => {
     if (i < 10) {
       i = '0' + i;
@@ -49,31 +66,71 @@ const NavBar = () => {
     setTime(newTime);
   }, 1000);
   return (
-    <View>
-      <View
+    <View
+      style={{
+        backgroundColor: 'white',
+        height: height * 0.1,
+        paddingLeft: 15,
+        flexDirection: 'row',
+      }}>
+      <TouchableOpacity
         style={{
-          // backgroundColor: '#b4c7e6',
-          backgroundColor: '#EEEEEE',
-          height: height * 0.1,
-          paddingLeft: 15,
-          flexDirection: 'row',
+          marginTop: 10,
+          width: 50,
+          height: 50,
+          marginRight: 0,
+        }}
+        onPress={() => {
+          Animated.timing(scaleValue, {
+            toValue: showMenu ? 1 : 0.95,
+            duration: 300,
+            useNativeDriver: true,
+          }).start();
+          sendScaleValue();
+          Animated.timing(offsetValue, {
+            toValue: showMenu ? 0 : 230,
+            duration: 300,
+            useNativeDriver: true,
+          }).start();
+          sendoffSetValue();
+          setShowMenu(!showMenu);
         }}>
-        <View style={{paddingRight: 35}}>
-          <Text style={{color: 'black', fontSize: 13, marginBottom: 0}}>
-            {time}
-          </Text>
-          <Text style={{color: 'black', fontSize: 30, fontWeight: 'bold'}}>
-            Welcome, Shanks
-          </Text>
-        </View>
-        <View style={{justifyContent: 'center', marginLeft: 20}}>
+        {showMenu === false && (
           <Image
             source={profile}
-            style={{width: 40, height: 40, borderRadius: 20}}
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              borderColor: 'blue',
+              borderWidth: 1,
+            }}
           />
-        </View>
+        )}
+        {showMenu === true && (
+          <Icon name="arrow-back-circle-outline" color="blue" size={50} />
+        )}
+      </TouchableOpacity>
+      <View style={{paddingLeft: 155}}>
+        <Text
+          style={{
+            color: 'black',
+            fontSize: 13,
+            marginBottom: 0,
+            textAlign: 'right',
+          }}>
+          {time}
+        </Text>
+        <Text
+          style={{
+            color: 'black',
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'right',
+          }}>
+          Welcome
+        </Text>
       </View>
-      <View style={{height: 1, width: width, backgroundColor: 'black'}} />
     </View>
   );
 };
