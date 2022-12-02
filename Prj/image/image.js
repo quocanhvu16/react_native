@@ -11,19 +11,26 @@ const home = {
   uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Home_Icon.svg/2048px-Home_Icon.svg.png',
 };
 const pass = {
-  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ4RGghRmM4WGtYh7ptc7w59YZhVy4kurv-Q&usqp=CAU',
+  uri: 'https://cdn-icons-png.flaticon.com/512/1224/1224191.png',
 };
 const retypepass = {
   uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQThNElIzEYiOyISU7DBH7FmG-jfZhf-OWAVA&usqp=CAU',
 };
-const image1 =
-  'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/emapeter-1643063054.jpeg';
-
-const image2 =
-  'https://talkclass.edu.vn/wp-content/uploads/2018/06/tu-vung-tieng-anh-chu-de-bep.jpg';
-const image3 =
-  'https://image.winudf.com/v2/image1/Y29tLmFwcHRyb25pay5iZWF1dGlmdWxraXRjaGVuaWRlYXNfc2NyZWVuXzBfMTU1Njc1NzMyNV8wODM/screen-0.jpg?fakeurl=1&type=.webp';
-
+const livingRoom = {
+  uri: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/emapeter-1643063054.jpeg',
+};
+const kitchen = {
+  uri: 'https://image.winudf.com/v2/image1/Y29tLmFwcHRyb25pay5iZWF1dGlmdWxraXRjaGVuaWRlYXNfc2NyZWVuXzBfMTU1Njc1NzMyNV8wODM/screen-0.jpg?fakeurl=1&type=.webp',
+};
+const bedRoom = {
+  uri: 'https://i.pinimg.com/originals/b3/fb/43/b3fb437f2a053725ff0d62ab7f134704.jpg',
+};
+const bathRoom = {
+  uri: 'https://media-cdn.tripadvisor.com/media/photo-s/15/17/c9/c6/bathroom.jpg',
+};
+const profile = {
+  uri: 'https://i.pinimg.com/originals/44/fa/f8/44faf83feb61a540659d50029db4b0ac.jpg',
+};
 export {
   background,
   image,
@@ -31,7 +38,9 @@ export {
   home,
   pass,
   retypepass,
-  image1,
-  image2,
-  image3,
+  livingRoom,
+  bedRoom,
+  kitchen,
+  profile,
+  bathRoom,
 };

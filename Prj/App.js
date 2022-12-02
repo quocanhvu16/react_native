@@ -1,21 +1,16 @@
 import {React} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import SignUp from './screens/user/signUp';
-import SignIn from './screens/user/signIn';
-import Dashboard from './screens/user/dashboard';
-
-const Stack = createNativeStackNavigator();
-
+import {MainStackNavigator} from './navigation/StackNavigator';
+import BottomTabNavigator from './navigation/TabNavigator';
+//import DrawerNavigator from './navigation/DrawerNavigator';
+import Living from './screens/user/livingroom';
+import RoomName from './components/user/RoomName';
+import LivingRoom from './screens/user/livingroom';
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-      </Stack.Navigator>
+      <MainStackNavigator />
     </NavigationContainer>
+    // <LivingRoom />
   );
 }
