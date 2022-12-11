@@ -9,6 +9,9 @@ const Stack = createNativeStackNavigator();
 import LivingRoom from '../screens/user/livingroom';
 import Kitchen from '../screens/user/kitchen';
 import BedRoom from '../screens/user/bedroom';
+import Ad_Dashboard from '../screens/admin/ad_dashboard';
+import Ad_Home from '../screens/admin/ad_home';
+import Ad_Room from '../screens/admin/ad_room';
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -19,6 +22,9 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Living Room" component={LivingRoom} />
       <Stack.Screen name="Kitchen" component={Kitchen} />
       <Stack.Screen name="Bed Room" component={BedRoom} />
+      <Stack.Screen name="Ad_Dasboard" component={Ad_Dashboard} />
+      <Stack.Screen name="Ad_Home" component={Ad_Home} />
+      <Stack.Screen name="Ad_Room" component={Ad_Room} />
     </Stack.Navigator>
   );
 };

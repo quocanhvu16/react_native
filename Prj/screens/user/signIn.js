@@ -112,32 +112,35 @@ const SignIn = () => {
         </View>
         {keyboardIsShown == false && (
           <View style={{paddingBottom: 20}}>
-            <View style={styles.button1}>
-              <Button
-                title="Đăng nhập"
-                color="#3f6eb9"
-                onPress={() => {
-                  setIDErr(isValidSdt(ID) == true ? '' : 'ID có 4 ký tự');
-                  setPasswordErr(
-                    isValidPass(password) == true
-                      ? ''
-                      : 'Mật khẩu phải có ít nhất 3 ký tự',
-                  );
-                  if (isValidSdt(ID) && isValidPass(password)) {
-                    alert('Đăng nhập thành công');
-                    navigation.navigate('Dashboard');
-                  } else {
-                    alert('Đăng nhập thất bại');
-                  }
-                }}
-              />
-            </View>
-            <View style={styles.button2}>
-              <Button
-                title="Đăng ký"
-                color="#f03b2c"
-                onPress={() => navigation.navigate('SignUp')}
-              />
+            <TouchableOpacity
+              style={{width: '40%', alignSelf:'center' }}
+              onPress={() => {
+                setIDErr(isValidSdt(ID) == true ? '' : 'ID có 4 ký tự');
+                setPasswordErr(
+                  isValidPass(password) == true
+                    ? ''
+                    : 'Mật khẩu phải có ít nhất 3 ký tự',
+                );
+                if (ID == 1234 && (password == 'admin' || password == 'Admin')) {
+                  navigation.navigate('Ad_Dasboard')
+                }
+                else if (isValidSdt(ID) && isValidPass(password)) {
+                  alert('Đăng nhập thành công');
+                  navigation.navigate('Dashboard');
+                } else {
+                  alert('Đăng nhập thất bại');
+                }
+              }}
+            >
+              <View style={{ padding: 10, marginTop: 20, width: '100%', backgroundColor: "#3f6eb9", alignItems: 'center', borderRadius: 10, }}>
+                <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 14 }}>ĐĂNG NHẬP</Text>
+              </View>
+            </TouchableOpacity>
+            <View style={[styles.button2, {flexDirection: 'row', justifyContent: 'center'}]}>
+              <Text style={{ color: 'black' }}>Bạn chưa có sẵn tài khoản?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                <Text style={{ color: 'blue' }}> Đăng ký</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -221,15 +224,11 @@ const styles = StyleSheet.create({
   forgetpass: {
     fontSize: 15,
     color: 'blue',
-    marginTop: 10,
+    marginTop: 5,
     alignSelf: 'flex-end',
-  },
-  button1: {
-    marginHorizontal: 120,
-    marginTop: 30,
+    fontStyle: 'italic'
   },
   button2: {
-    marginHorizontal: 120,
     marginTop: 20,
   },
   input_text: {

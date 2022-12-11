@@ -57,7 +57,7 @@ const SignUp = () => {
             <TextInput
               style={styles.input}
               placeholder="Họ và tên"
-              placeholderTextColor={'black'}
+              placeholderTextColor={'gray'}
             />
           </View>
           {keyboardIsShown == false && <View style={{height: 35}} />}
@@ -71,7 +71,7 @@ const SignUp = () => {
               style={styles.input}
               placeholder="ID"
               keyboardType="numeric"
-              placeholderTextColor={'black'}
+              placeholderTextColor={'gray'}
             />
           </View>
           {keyboardIsShown == false && (
@@ -89,7 +89,7 @@ const SignUp = () => {
               secureTextEntry={pwHidden1 ? true : false}
               style={styles.input}
               placeholder="Mật Khẩu"
-              placeholderTextColor={'black'}
+              placeholderTextColor={'gray'}
             />
             <TouchableOpacity
               style={{
@@ -125,7 +125,7 @@ const SignUp = () => {
               secureTextEntry={pwHidden2 ? true : false}
               style={styles.input}
               placeholder="Nhập lại mật khẩu"
-              placeholderTextColor={'black'}
+              placeholderTextColor={'gray'}
             />
             <TouchableOpacity
               style={{
@@ -192,7 +192,7 @@ const SignUp = () => {
             {justifyContent: 'center', marginBottom: 40},
           ]}>
           <Text style={styles.text}>Bạn đã có sẵn tài khoản?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.text1}> Đăng nhập</Text>
           </TouchableOpacity>
         </View>
