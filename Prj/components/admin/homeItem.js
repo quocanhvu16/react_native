@@ -1,19 +1,17 @@
 import React, {useState} from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { Card, NativeBaseProvider } from "native-base";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Home = (props) => {
-    const [deleteModal, setDeleteModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
 
-    function showDeleteModal() {
+    function showEditModal() {
         return(
             <TouchableOpacity
                 activeOpacity={1}
                 style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }} 
-                onPress={() => setDeleteModal(false)}>
+                onPress={() => setEditModal(false)}>
                     <TouchableOpacity 
                         style={{ height: '21%', width: '80%', backgroundColor: 'white', borderRadius: 15 }}
                         activeOpacity={1}>
@@ -25,7 +23,7 @@ const Home = (props) => {
                                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Yes</Text>
                             </TouchableOpacity>
                             <TouchableOpacity 
-                                onPress={() => setDeleteModal(!deleteModal)}
+                                onPress={() => setEditModal(!editModal)}
                                 style= {{width: '40%', height: 50, borderWidth: 3, borderColor: 'red', borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: 'red', fontSize: 16, fontWeight: 'bold' }}>No</Text>
                             </TouchableOpacity>
@@ -37,7 +35,7 @@ const Home = (props) => {
 
     return(
         <NativeBaseProvider>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('Ad_Home', {data: props.item.listRooms, id: props.item.ID})}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('Ad_Home', {data: props.item})}>
                 <Card
                 style={{
                     marginTop: 15,
@@ -58,28 +56,31 @@ const Home = (props) => {
                     elevation: 3,}}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black', fontSize: 16, marginBottom: 10 }}>ID: 
-                            <Text style={{ fontSize: 16 }}> {props.item.ID}</Text>    
+                            <Text style={{ fontSize: 16 }}> {props.item.code}</Text>    
                         </Text>
-                        <TouchableOpacity style={{ marginRight: 5 }} onPress={() => setDeleteModal(!deleteModal) }>
-                            <MaterialIcons name='delete' size={26} color='red' />
+                        <TouchableOpacity style={{ marginRight: 5 }} onPress={() => setEditModal(!editModal) }>
+                            <AntDesign name='edit' size={26} color='#3366CC' />
                         </TouchableOpacity>
                     </View>
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Họ tên: 
-                        <Text style={{ fontWeight: 'normal' }}> {props.item.username}</Text>    
+                        <Text style={{ fontWeight: 'normal' }}> {props.item.name}</Text>    
                     </Text>
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Địa chỉ: 
                         <Text style={{ fontWeight: 'normal' }}> {props.item.address}</Text>    
                     </Text>
-                    <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Trạng thái kích hoạt: 
-                        <Text style={{ fontWeight: 'normal', color: props.item.is_active ? 'green' : 'red' }}> {props.item.is_active ? 'true' : 'false'}</Text>    
+                    <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Trạng thái đăng ký: 
+                        <Text style={{ fontWeight: 'normal', color: props.item.statusRegister? 'green' : 'red' }}> {props.item.statusRegister.toString()}</Text>    
+                    </Text>
+                    <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Trạng thái sử dụng: 
+                        <Text style={{ fontWeight: 'normal', color: props.item.statusUse? 'green' : 'red' }}> {props.item.statusUse.toString()}</Text>    
                     </Text>
                 </Card>
             </TouchableOpacity>
             <Modal 
-                visible={deleteModal} 
+                visible={editModal} 
                 animationType='slide'
                 transparent={true}>
-                {showDeleteModal()}
+                {showEditModal()}
             </Modal>  
         </NativeBaseProvider>
     )

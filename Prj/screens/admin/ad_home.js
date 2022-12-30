@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet, TextInput } from "react-native";
 import Room from '../../components/admin/roomItem';
 import Icon from 'react-native-vector-icons/Feather';
@@ -7,21 +7,38 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Input, NativeBaseProvider } from "native-base";
 
+const min = 1000;
+const max = 9999;
+const id =  parseInt(min + Math.random() * (max - min));
+
 const Ad_Home = (props) => {
-    console.log('romm: ', props)
     const [addRoomModal, setAddRoomModal] = useState(false);
     const [type, setType] = useState('');
     const [name, setName] = useState('');
-    const data = props.route.params.data;
+    const [data, setData] = useState('');
+    const home = props.route.params.data;
+
+    async function fetchUser() {
+        const res = await fetch(`https://dev-smarthome.onrender.com/api/home/${home._id}/rooms`, {
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
+            }
+        })
+        const json = await res.json();
+        console.log(json);
+        setData(json);
+    }
+
+    useEffect(() => {
+        fetchUser();
+    },[])
 
     function renderItem(item){
         return <Room {...item} {...props} />
     }
 
     function showAddRoomModal() {
-        const min = 1000;
-        const max = 9999;
-        const id =  parseInt(min + Math.random() * (max - min));
         return(
             <NativeBaseProvider>
                 <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -85,7 +102,7 @@ const Ad_Home = (props) => {
                     style={{ alignItems: 'flex-start', justifyContent: 'center'}}>
                     <Ionicons name='arrow-back' color='black' size={26} />
                 </TouchableOpacity>
-                <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center', color: 'black', flex: 6 }}>Smart home ID: {props.route.params.id}</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center', color: 'black', flex: 6 }}>Smart home: {home.code}</Text>
                 <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center' }} onPress={() => setAddRoomModal(!addRoomModal)}>
                     <Icon name='plus-circle' color='black' size={26}/>
                 </TouchableOpacity>

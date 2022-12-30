@@ -25,6 +25,7 @@ const SignUp = () => {
   const [IDErr, setIDErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
   const [ID, setID] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [retypassword, setretyPassword] = useState('');
   const [retypasswordErr, setretyPasswordErr] = useState('');
@@ -40,6 +41,23 @@ const SignUp = () => {
       setKeyBoardIsShown(false);
     });
   });
+
+  const checkSignUp = async (ID, email, name, password) => {
+
+    const res = await fetch('https://dev-smarthome.onrender.com/api/user/signup',
+      {   
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+          },
+          body: JSON.stringify({ username: ID, email, name, password })
+      })
+    const json = await res.json()
+      // alert('Đăng ký thành công');
+      // navigation.navigate('SignIn');
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.background}>
@@ -56,6 +74,9 @@ const SignUp = () => {
             <Image source={user} style={styles.icon} />
             <TextInput
               style={styles.input}
+              onChangeText={text => {
+                setName(text);
+              }}
               placeholder="Họ và tên"
               placeholderTextColor={'gray'}
             />
@@ -70,7 +91,6 @@ const SignUp = () => {
               }}
               style={styles.input}
               placeholder="ID"
-              keyboardType="numeric"
               placeholderTextColor={'gray'}
             />
           </View>
@@ -175,8 +195,7 @@ const SignUp = () => {
                   isValidPass(password) &&
                   password === retypassword
                 ) {
-                  alert('Đăng ký thành công');
-                  navigation.navigate('SignIn');
+                  checkSignUp(ID.toString(), 'test5@gmail.com', name, password);
                 } else {
                   alert('Đăng ký thất bại');
                 }

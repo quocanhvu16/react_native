@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet, TextInput } from "react-native";
 import Home from '../../components/admin/homeItem';
 import Icon from 'react-native-vector-icons/Feather';
@@ -7,152 +7,80 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Input, NativeBaseProvider } from "native-base";
 
+const id =  (Math.random() + 1).toString(36).substring(6);
+
 const Ad_Dasboard = (props) => {
     const [menuModal, setMenuModal] = useState(false);
     const [signOutModal, setSignOutModal] = useState(false);
     const [addHomeModal, setAddHomeModal] = useState(false);
     const [address, setAddress] = useState('');
-    let data = [
-            {
-                ID: '2421',
-                username: 'test1',
-                address: 'BK',
-                is_active: true,
-                listRooms: [
-                    {
-                        ID: 'R3422',
-                        type: 'Living Room',
-                        name: 'Phòng khách 1',
-                        listDevices: [
-                            {
-                                ID: 'D1231',
-                                type: 'den',
-                                name: 'Đèn 1',
-                                status: true
-                            }
-                        ]
-                    },
-                    {
-                        ID: 'R3421',
-                        type: 'Kitchen',
-                        name: 'Phòng bếp 1',
-                        listDevices: [
-                            {
-                                ID: 'D1431',
-                                type: 'TV',
-                                name: 'TV 1',
-                                status: false
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                ID: '9876',
-                username: '',
-                address: 'SG',
-                is_active: false,
-                listRooms: [
-                    {
-                        ID: 'R3422',
-                        type: 'Bedroom',
-                        name: 'Phòng ngủ 1',
-                        listDevices: [
-                            {
-                                ID: 'D1231',
-                                type: 'den',
-                                name: 'Đèn 1',
-                                status: true
-                            }
-                        ]
-                    },
-                    {
-                        ID: 'R3421',
-                        type: 'Living Room',
-                        name: 'Phòng khách 1',
-                        listDevices: [
-                            {
-                                ID: 'D1431',
-                                type: 'TV',
-                                name: 'TV 1',
-                                status: false
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                ID: '3452',
-                username: '',
-                address: 'HN',
-                is_active: false,
-                listRooms: [
-                    {
-                        ID: 'R3422',
-                        type: 'Living Room',
-                        name: 'Phòng khách 1',
-                        listDevices: [
-                            {
-                                ID: 'D1231',
-                                type: 'den',
-                                name: 'Đèn 1',
-                                status: true
-                            }
-                        ]
-                    },
-                    {
-                        ID: 'R3421',
-                        type: 'Living Room',
-                        name: 'Phòng khách 1',
-                        listDevices: [
-                            {
-                                ID: 'D1431',
-                                type: 'TV',
-                                name: 'TV 1',
-                                status: false
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                ID: '4563',
-                username: 'test4',
-                address: 'Huế',
-                is_active: true,
-                listRooms: [
-                    {
-                        ID: 'R3422',
-                        type: 'Living Room',
-                        name: 'Phòng khách 1',
-                        listDevices: [
-                            {
-                                ID: 'D1231',
-                                type: 'den',
-                                name: 'Đèn 1',
-                                status: true
-                            }
-                        ]
-                    },
-                    {
-                        ID: 'R3421',
-                        type: 'Living Room',
-                        name: 'Phòng khách 1',
-                        listDevices: [
-                            {
-                                ID: 'D1431',
-                                type: 'TV',
-                                name: 'TV 1',
-                                status: false
-                            }
-                        ]
-                    }
-                ]
-            }
-    ]
+    const [desc, setDesc] = useState('');
+    const [data, setData] = useState([]);
 
+    // const checkLogin = (token) => (
+    //     fetch(`${Setting.url}check_login.php`,
+    //     {   
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Accept: 'application/json'
+    //         },
+    //         body: JSON.stringify({ token })
+    //     })
+    //     .then(res => res.json())
+    // );
+
+    // const homeData = () => (
+    //     fetch(Setting.url)
+    //     .then(res => res.json())
+    // );
+    async function fetchHome() {
+        const res = await fetch('https://dev-smarthome.onrender.com/api/home', {
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
+            }
+        })
+        const json = await res.json();
+        setData(json);
+    }
+
+    useEffect(() => {
+        fetchHome();
+        while(1){
+            let check = true;
+            data.map(item => {
+                if(item.code == id) {
+                    id = (Math.random() + 1).toString(36).substring(6);
+                    check = false;
+                }
+            })
+            if(check) break;
+        }
+    },[])
+    
     function renderItem(item){
         return <Home {...item} {...props} />
+    }
+
+    const addHome = async ( desc, address, code) => {
+        const res = await fetch('https://dev-smarthome.onrender.com/api/home',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
+
+            },
+            body: JSON.stringify({ name: 'default name', desc, address, code }) 
+        }
+        )
+        const json = await res.json();
+        console.log(json)
+        alert('Thêm phòng thành công');
+        setAddHomeModal(false);
+        fetchHome();
     }
 
     function showMenuLeft(){
@@ -228,9 +156,6 @@ const Ad_Dasboard = (props) => {
     }
 
     function showAddHomeModal() {
-        const min = 1000;
-        const max = 9999;
-        const id =  parseInt(min + Math.random() * (max - min));
         return(
             <NativeBaseProvider>
                 <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -252,14 +177,6 @@ const Ad_Dasboard = (props) => {
                                     defaultValue={id.toString()}
                                     isDisabled={true} />
                             </View>
-                            <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Họ tên
-                                <Text style={{ color: 'red' }}>*</Text>
-                            </Text>
-                            <View style= {{ marginRight: 20, borderRadius: 10 }}>
-                                <Input
-                                    defaultValue=''
-                                    isDisabled={true} />
-                            </View>
                             <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Địa chỉ
                                 <Text style={{ color: 'red' }}>*</Text>
                             </Text>
@@ -271,7 +188,27 @@ const Ad_Dasboard = (props) => {
                                     }}
                                     isDisabled={false} />
                             </View>
-                            <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Trạng thái kích hoạt
+                            <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Mô tả
+                                <Text style={{ color: 'red' }}>*</Text>
+                            </Text>
+                            <View style= {{ marginRight: 20, borderRadius: 10 }}>
+                                <Input
+                                    placeholder="Please enter description"
+                                    onChangeText={text => {
+                                        setDesc(text);
+                                    }}
+                                    isDisabled={false} />
+                            </View>
+                            <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Trạng thái đăng ký
+                                <Text style={{ color: 'red' }}>*</Text>
+                            </Text>
+                            <View style= {{ marginRight: 20, borderRadius: 10 }}>
+                                <Input
+                                    style={{ color: 'red' }}
+                                    defaultValue='false'
+                                    isDisabled={true} />
+                            </View>
+                            <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Trạng thái sử dụng
                                 <Text style={{ color: 'red' }}>*</Text>
                             </Text>
                             <View style= {{ marginRight: 20, borderRadius: 10 }}>
@@ -281,7 +218,7 @@ const Ad_Dasboard = (props) => {
                                     isDisabled={true} />
                             </View>
                         </View>
-                        <TouchableOpacity style={{marginTop: 30}}>
+                        <TouchableOpacity style={{marginTop: 30}} onPress={() => addHome( desc, address, id)}>
                             <View style={{ backgroundColor: '#3366CC', width: '40%', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
                                 <Text style={{ fontWeight: 'bold', fontSize: 26, color: 'white', paddingTop: 5, paddingBottom: 5 }}>Save</Text>
                             </View>

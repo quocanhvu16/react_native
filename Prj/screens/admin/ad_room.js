@@ -6,6 +6,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Input, NativeBaseProvider } from "native-base";
 import Device from "../../components/admin/deviceItem";
 
+const min = 1000;
+const max = 9999;
+const id =  parseInt(min + Math.random() * (max - min));
+
 const Ad_Room = (props) => {
     console.log('romm: ', props)
     const [addRoomModal, setAddRoomModal] = useState(false);
@@ -18,9 +22,7 @@ const Ad_Room = (props) => {
     }
 
     function showAddDeviceModal() {
-        const min = 1000;
-        const max = 9999;
-        const id =  parseInt(min + Math.random() * (max - min));
+        
         return(
             <NativeBaseProvider>
                 <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>

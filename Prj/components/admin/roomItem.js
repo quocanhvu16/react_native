@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { Card, NativeBaseProvider } from "native-base";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Home = (props) => {
     const [deleteModal, setDeleteModal] = useState(false);
@@ -58,14 +56,14 @@ const Home = (props) => {
                     elevation: 3,}}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black', fontSize: 16, marginBottom: 10 }}>ID: 
-                            <Text style={{ fontSize: 16 }}> {props.item.ID}</Text>    
+                            <Text style={{ fontSize: 16 }}> {props.item._id}</Text>    
                         </Text>
                         <TouchableOpacity style={{ marginRight: 5 }} onPress={() => setDeleteModal(!deleteModal) }>
-                            <MaterialIcons name='delete' size={26} color='red' />
+                            <AntDesign name='edit' size={26} color='#3366CC' />
                         </TouchableOpacity>
                     </View>
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Loại phòng: 
-                        <Text style={{ fontWeight: 'normal' }}> {props.item.type}</Text>    
+                        <Text style={{ fontWeight: 'normal' }}> Phòng khách</Text>    
                     </Text>
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Tên phòng: 
                         <Text style={{ fontWeight: 'normal' }}> {props.item.name}</Text>    
