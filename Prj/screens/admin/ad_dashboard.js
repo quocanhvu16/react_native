@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet, TextInput } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet, Dimensions, ScrollView } from "react-native";
 import Home from '../../components/admin/homeItem';
 import Icon from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -7,7 +7,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Input, NativeBaseProvider } from "native-base";
 
-const id =  (Math.random() + 1).toString(36).substring(6);
+let id =  (Math.random() + 1).toString(36).substring(6);
+const height = Dimensions.get('window').height;
 
 const Ad_Dasboard = (props) => {
     const [menuModal, setMenuModal] = useState(false);
@@ -78,7 +79,7 @@ const Ad_Dasboard = (props) => {
         )
         const json = await res.json();
         console.log(json)
-        alert('Thêm phòng thành công');
+        alert('Thêm nhà thành công');
         setAddHomeModal(false);
         fetchHome();
     }
@@ -230,7 +231,7 @@ const Ad_Dasboard = (props) => {
     }
 
     return (
-        <View style={{ margin: 10, marginBottom: 0, marginTop: 20 }}>
+        <View style={{ marginHorizontal: 10, marginTop: 20 }}>
             <View style= {{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
                 <TouchableOpacity 
                     onPress={() => setMenuModal(!menuModal)}
@@ -242,11 +243,11 @@ const Ad_Dasboard = (props) => {
                     <Icon name='plus-circle' color='black' size={26}/>
                 </TouchableOpacity>
             </View>
-            <View style= {{ marginTop: 20 }}>
+            <View style= {{ marginTop: 20, height: '93%' }}>
                 <FlatList
                     data={data}
                     renderItem = {(item) => renderItem(item)} 
-                    keyExtractor = {item => item.ID}/>
+                    keyExtractor = {item => item.code}/>
             </View>
 
             {/* modal menu */}

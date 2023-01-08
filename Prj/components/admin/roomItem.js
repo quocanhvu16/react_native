@@ -35,10 +35,11 @@ const Home = (props) => {
 
     return(
         <NativeBaseProvider>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('Ad_Room', {data: props.item.listDevices, id: props.item.ID, name: props.item.name})}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('Ad_Room', {data: props.item})}>
                 <Card
                 style={{
-                    marginTop: 15,
+                    marginBottom: 10,
+                    marginTop: 5,
                     backgroundColor: 'white', 
                     paddingLeft: 5,
                     paddingRight: 5,
@@ -67,6 +68,9 @@ const Home = (props) => {
                     </Text>
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Tên phòng: 
                         <Text style={{ fontWeight: 'normal' }}> {props.item.name}</Text>    
+                    </Text>
+                    <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Mô tả: 
+                        <Text style={{ fontWeight: 'normal' }}> {props.item.desc}</Text>    
                     </Text>
                 </Card>
             </TouchableOpacity>

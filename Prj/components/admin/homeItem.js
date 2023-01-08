@@ -38,7 +38,8 @@ const Home = (props) => {
             <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('Ad_Home', {data: props.item})}>
                 <Card
                 style={{
-                    marginTop: 15,
+                    marginBottom: 10,
+                    marginTop: 5,
                     backgroundColor: 'white', 
                     paddingLeft: 5,
                     paddingRight: 5,
@@ -67,6 +68,9 @@ const Home = (props) => {
                     </Text>
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Địa chỉ: 
                         <Text style={{ fontWeight: 'normal' }}> {props.item.address}</Text>    
+                    </Text>
+                    <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Mô tả: 
+                        <Text style={{ fontWeight: 'normal' }}> {props.item.desc}</Text>    
                     </Text>
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Trạng thái đăng ký: 
                         <Text style={{ fontWeight: 'normal', color: props.item.statusRegister? 'green' : 'red' }}> {props.item.statusRegister.toString()}</Text>    

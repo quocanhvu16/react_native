@@ -5,6 +5,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Device = (props) => {
     const [deleteModal, setDeleteModal] = useState(false);
+    console.log(props)
 
     function showDeleteModal() {
         return(
@@ -38,8 +39,10 @@ const Device = (props) => {
             <TouchableOpacity activeOpacity={0.7}>
                 <Card
                 style={{
-                    marginTop: 15,
+                    marginBottom: 10,
+                    marginTop: 5,
                     backgroundColor: 'white', 
+                    marginHorizontal: 10,
                     paddingLeft: 5,
                     paddingRight: 5,
                     paddingBottom: 5,
@@ -50,13 +53,13 @@ const Device = (props) => {
                         width: 0,
                         height: 1,
                     },
-                    shadowOpacity: 0.22,
-                    shadowRadius: 2.22,
-                    
-                    elevation: 3,}}>
+                    shadowOpacity: 0.20,
+                    shadowRadius: 1.41,
+
+                    elevation: 2,}}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black', fontSize: 16, marginBottom: 10 }}>ID: 
-                            <Text style={{ fontSize: 16 }}> {props.item.ID}</Text>    
+                            <Text style={{ fontSize: 16 }}> {props.item._id}</Text>    
                         </Text>
                         <TouchableOpacity style={{ marginRight: 5 }} onPress={() => setDeleteModal(!deleteModal) }>
                             <AntDesign name='edit' size={26} color='#3366CC' />
@@ -68,8 +71,8 @@ const Device = (props) => {
                     <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Tên thiết bị: 
                         <Text style={{ fontWeight: 'normal' }}> {props.item.name}</Text>    
                     </Text>
-                    <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Trạng thái kích hoạt: 
-                        <Text style={{ fontWeight: 'normal', color: props.item.status ? 'green' : 'red' }}> {props.item.status ? 'true' : 'false'}</Text>    
+                    <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'black' }}>Mô tả: 
+                        <Text style={{ fontWeight: 'normal' }}> {props.item.desc}</Text>    
                     </Text>
                 </Card>
             </TouchableOpacity>
