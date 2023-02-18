@@ -9,6 +9,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Keyboard,
+  Alert,
+  BackHandler,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {user, home, pass, retypepass, background} from '../../image/image';
@@ -21,6 +23,26 @@ const windowHeight = Dimensions.get('window').height;
 
 const SignUp = () => {
   const navigation = useNavigation();
+  // useEffect(() => {
+  //   const backAction = () => {
+  //     Alert.alert('Thoát!', 'Bạn có chắc chắn muốn thoát ứng dụng?', [
+  //       {
+  //         text: 'KHÔNG',
+  //         onPress: () => null,
+  //         style: 'cancel',
+  //       },
+  //       {text: 'CÓ', onPress: () => BackHandler.exitApp()},
+  //     ]);
+  //     return true;
+  //   };
+  //
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     backAction,
+  //   );
+  //
+  //   return () => backHandler.remove();
+  // }, []);
   const [keyboardIsShown, setKeyBoardIsShown] = useState(false);
   const [IDErr, setIDErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
@@ -43,20 +65,21 @@ const SignUp = () => {
   });
 
   const checkSignUp = async (ID, email, name, password) => {
-
-    const res = await fetch('https://dev-smarthome.onrender.com/api/user/signup',
-      {   
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-          },
-          body: JSON.stringify({ username: ID, email, name, password })
-      })
-    const json = await res.json()
-      // alert('Đăng ký thành công');
-      // navigation.navigate('SignIn');
-  }
+    const res = await fetch(
+      'https://dev-smarthome.onrender.com/api/user/signup',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({username: ID, email, name, password}),
+      },
+    );
+    const json = await res.json();
+    // alert('Đăng ký thành công');
+    // navigation.navigate('SignIn');
+  };
 
   return (
     <View style={styles.container}>

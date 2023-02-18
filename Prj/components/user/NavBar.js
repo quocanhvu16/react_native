@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useLayoutEffect, useRef, useState} from 'react';
 import React from 'react';
 import {
   Image,
@@ -10,14 +10,27 @@ import {
 } from 'react-native';
 import {profile} from '../../image/image';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useDispatch, useSelector} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const NavBar = props => {
+  // const showMenu1 = useSelector(state => state.showMenu);
+  const [borderRadius, setBorderRadius] = useState(0);
   const offsetValue = useRef(new Animated.Value(0)).current;
   const scaleValue = useRef(new Animated.Value(1)).current;
-  const [showMenu, setShowMenu] = useState(false);
+  const dispatch = useDispatch();
+  // const [showMenu, setShowMenu] = useState(false);
+  const showMenu = useSelector(state => state.showMenu);
+  useLayoutEffect(() => {
+    if (showMenu === true) {
+      setBorderRadius(20);
+    } else {
+      setBorderRadius(0);
+    }
+  }, [showMenu]);
   const [user, setUser] = useState('');
   const [time, setTime] = useState('');
   const sendScaleValue = () => {
@@ -66,19 +79,19 @@ const NavBar = props => {
     setTime(newTime);
   }, 1000);
   return (
-    <View
+    <LinearGradient
+      colors={['#4c669f', '#3b5998', '#192f6a']}
       style={{
-        backgroundColor: 'white',
         height: height * 0.1,
         paddingLeft: 15,
         flexDirection: 'row',
+        borderTopLeftRadius: borderRadius,
       }}>
       <TouchableOpacity
         style={{
           marginTop: 10,
           width: 50,
           height: 50,
-          marginRight: 0,
         }}
         onPress={() => {
           Animated.timing(scaleValue, {
@@ -93,7 +106,7 @@ const NavBar = props => {
             useNativeDriver: true,
           }).start();
           sendoffSetValue();
-          setShowMenu(!showMenu);
+          dispatch({type: 'setShowMenu'});
         }}>
         {showMenu === false && (
           <Image
@@ -108,13 +121,14 @@ const NavBar = props => {
           />
         )}
         {showMenu === true && (
-          <Icon name="arrow-back-circle-outline" color="blue" size={50} />
+          <Icon name="arrow-back-circle-outline" color="#fee5e1" size={50} />
         )}
       </TouchableOpacity>
-      <View style={{paddingLeft: 155}}>
+      <View
+        style={{display: 'flex', flexDirection: 'column', width: width * 0.8}}>
         <Text
           style={{
-            color: 'black',
+            color: '#b1b1b1',
             fontSize: 13,
             marginBottom: 0,
             textAlign: 'right',
@@ -123,15 +137,15 @@ const NavBar = props => {
         </Text>
         <Text
           style={{
-            color: 'black',
+            color: '#eae7d6',
             fontSize: 30,
             fontWeight: 'bold',
             textAlign: 'right',
           }}>
-          Welcome
+          Xin chào
         </Text>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 export default NavBar;

@@ -6,11 +6,22 @@ import BottomTabNavigator from './navigation/TabNavigator';
 import Living from './screens/user/livingroom';
 import RoomName from './components/user/RoomName';
 import LivingRoom from './screens/user/livingroom';
+import store from './redux/store';
+import {Provider} from 'react-redux';
+import Dashboard from './screens/user/dashboard';
+import NavBar from "./components/user/NavBar";
 export default function App() {
   return (
-    <NavigationContainer>
-      <MainStackNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <MainStackNavigator />
+        {/*<Dashboard />*/}
+        {/*<NavBar />*/}
+      </NavigationContainer>
+    </Provider>
+    // <NavigationContainer>
+    //   <MainStackNavigator />
+    // </NavigationContainer>
     // <LivingRoom />
   );
 }

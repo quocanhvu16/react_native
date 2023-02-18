@@ -1,11 +1,33 @@
-import React from 'react';
-import {Text, Dimensions, View, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  Text,
+  Dimensions,
+  View,
+  TouchableOpacity,
+  BackHandler,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const RoomName = props => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => {
+      backHandler.remove();
+    };
+    // }
+  }, []);
   const colorText = 'black';
   return (
     <View
