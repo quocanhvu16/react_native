@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from "react";
-import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet, Dimensions, ImageBackground, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Input, NativeBaseProvider, Card, Select } from "native-base";
 import Device from "../../components/admin/deviceItem";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 
+const {width} = Dimensions.get('window');
 
 const Ad_Room = (props) => {
     const [addRoomModal, setAddRoomModal] = useState(false);
@@ -14,7 +16,8 @@ const Ad_Room = (props) => {
     const [desc, setDesc] = useState('');
     const [lights, setLights] = useState([]);
     const [airs, setAirs] = useState([]);
-
+    const [tmp, setTmp] = useState(false);
+    const [typePage, setTypePage] = useState('light')
     const room = props.route.params.data;
 
     async function fetchLights() {
@@ -44,7 +47,7 @@ const Ad_Room = (props) => {
     useEffect(() => {
         fetchLights();
         fetchAirs();
-    },[])
+    },[tmp])
 
     const addDevice = async ( type, name, desc) => {
         let url = ''
@@ -65,13 +68,19 @@ const Ad_Room = (props) => {
         const json = await res.json();
         console.log(json)
         alert('Thêm thiết bị thành công');
+        if (type === 'den') {
+            fetchLights();
+            setTypePage('light')
+        }
+        else if (type== 'air') {
+            fetchAirs();
+            setTypePage('air')
+        }
         setAddRoomModal(false);
-        if (type === 'den') fetchLights();
-        else fetchAirs();
     }
 
     function renderItem(item){
-        return <Device {...item} {...props} />
+        return <Device item={item} {...props} tmp={tmp} setTmp={setTmp}/>
     }
 
     function showAddDeviceModal() {
@@ -127,13 +136,101 @@ const Ad_Room = (props) => {
                         </View>
                         <TouchableOpacity style={{marginTop: 30}} onPress={() => addDevice(type, name, desc)}>
                             <View style={{ backgroundColor: '#3366CC', width: '40%', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 26, color: 'white', paddingTop: 5, paddingBottom: 5 }}>Save</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 26, color: 'white', paddingTop: 5, paddingBottom: 5 }}>Lưu</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                 </View>
             </NativeBaseProvider>
         )
+    }
+
+
+    function listLight(){
+        return(
+            <NativeBaseProvider>
+                <Card style={{
+                    height: '97%',
+                    marginTop: 5,
+                    backgroundColor: 'white', 
+                    paddingLeft: 5,
+                    paddingRight: 5,
+                    paddingTop: 5,
+                    borderRadius: 10,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.22,
+                    shadowRadius: 2.22,
+                    
+                    elevation: 3,}}>
+                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, marginTop: 10, marginBottom: 10, marginLeft: 10 }}>Danh sách đèn:</Text>
+                    <View style={{ backgroundColor: '#BBBBBB', width: '95%', alignSelf: 'center', height: 3, marginBottom: 10 }}></View>
+                    <ScrollView>
+                        {lights.map(item =>(
+                            renderItem(item)
+                        ))}
+                    </ScrollView>
+                </Card>
+            </NativeBaseProvider>
+        )
+    }
+
+    function listAir(){
+        return(
+            <NativeBaseProvider>
+                <Card style={{
+                    height: '97%',
+                    marginTop: 5,
+                    backgroundColor: 'white', 
+                    paddingLeft: 5,
+                    paddingRight: 5,
+                    paddingTop: 5,
+                    borderRadius: 10,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.22,
+                    shadowRadius: 2.22,
+                    
+                    elevation: 3,}}>
+                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, marginTop: 10, marginBottom: 10, marginLeft: 10 }}>Danh sách air:</Text>
+                    <View style={{ backgroundColor: '#BBBBBB', width: '95%', alignSelf: 'center', height: 3, marginBottom: 10 }}></View>
+                    <ScrollView>
+                        {airs.map(item =>(
+                            renderItem(item)
+                        ))}
+                    </ScrollView>
+                </Card>
+            </NativeBaseProvider>
+        )
+    }
+
+    function renderList(){
+        if(typePage == 'light'){
+            if(lights.length == 0) return (
+                <View style={{ height: '90%', alignItems: 'center', justifyContent: 'center',  }}>
+                    <ImageBackground source={require('../../image/no_result.jpg')} style={{ width: 300, height: 300}}>
+                        <Text style={{ color: 'gray', textAlign: 'center', fontSize: 24, fontWeight: '900' }}>Không có đèn</Text>
+                    </ImageBackground>
+                </View>
+            )
+            else return listLight()
+        }
+        else if(typePage == 'air'){
+            if(airs.length == 0) return (
+                <View style={{ height: '90%', alignItems: 'center', justifyContent: 'center',  }}>
+                    <ImageBackground source={require('../../image/no_result.jpg')} style={{ width: 300, height: 300}}>
+                        <Text style={{ color: 'gray', textAlign: 'center', fontSize: 24, fontWeight: '900' }}>Không có air</Text>
+                    </ImageBackground>
+                </View>
+            )
+            else return listAir()
+        }
     }
 
     return (
@@ -149,64 +246,22 @@ const Ad_Room = (props) => {
                     <Icon name='plus-circle' color='black' size={26}/>
                 </TouchableOpacity>
             </View>
-            <View style= {{ marginTop: 20, height: '93%' }}>
-                {lights.length == 0 ? null : (
-                    <NativeBaseProvider>
-                        <Card style={{
-                            height: '95%',
-                            marginTop: 5,
-                            backgroundColor: 'white', 
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            paddingTop: 5,
-                            borderRadius: 10,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 1,
-                            },
-                            shadowOpacity: 0.22,
-                            shadowRadius: 2.22,
-                            
-                            elevation: 3,}}>
-                            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, marginTop: 10, marginBottom: 10, marginLeft: 10 }}>Danh sách đèn:</Text>
-                            <View style={{ backgroundColor: '#BBBBBB', width: '95%', alignSelf: 'center', height: 3, marginBottom: 10 }}></View>
-                            <FlatList
-                                data={lights}
-                                renderItem = {(item) => renderItem(item)} 
-                                keyExtractor = {item => item._id}/>
-                        </Card>
-                    </NativeBaseProvider>
-                )}
-                {airs.length == 0 ? null : (
-                    <NativeBaseProvider>
-                        <Card style={{
-                            height: '95%',
-                            marginBottom: 10,
-                            backgroundColor: 'white', 
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            paddingTop: 5,
-                            borderRadius: 10,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 1,
-                            },
-                            shadowOpacity: 0.22,
-                            shadowRadius: 2.22,
-                            
-                            elevation: 3,}}>
-                            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, marginTop: 10, marginBottom: 10, marginLeft: 10 }}>Danh sách air:</Text>
-                            <View style={{ backgroundColor: '#BBBBBB', width: '95%', alignSelf: 'center', height: 3, marginBottom: 10 }}></View>
-                            <View style={{ backgroundColor: '' }}></View>
-                            <FlatList
-                                data={airs}
-                                renderItem = {(item) => renderItem(item)} 
-                                keyExtractor = {item => item._id}/>
-                        </Card>
-                    </NativeBaseProvider>
-                )}
+            <View style= {{ marginTop: 20, height: '93%', justifyContent: 'space-between' }}>
+                {renderList()}
+                <View style={{width: width, flexDirection: 'row', height: 50, backgroundColor: 'white'}}>
+                    <TouchableOpacity 
+                        onPress={() => setTypePage('light')}
+                        disabled={typePage == 'light' ? true : false}
+                        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', borderRadius: typePage == 'light' ? 10 : 0, backgroundColor: typePage == 'light' ? 'blue' : 'white' }}>
+                        <MaterialCommunityIcons name="lightbulb-variant" color={typePage == 'light' ? 'white' : "blue"} size={28} />
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={() => setTypePage('air')}
+                        disabled={typePage == 'air' ? true : false}
+                        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: typePage == 'air' ? 10 : 0, backgroundColor: typePage == 'air' ? 'blue' : 'white' }}>
+                        <Entypo name="air" color={typePage == 'air' ? 'white' : "blue"} size={28} />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             {/* modal add devide */}

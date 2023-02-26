@@ -4,14 +4,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUp from '../screens/user/signUp';
 import SignIn from '../screens/user/signIn';
 import BottomTabNavigator from './TabNavigator';
-import DrawerNavigator from './DrawerNavigator';
-const Stack = createNativeStackNavigator();
 import LivingRoom from '../screens/user/livingroom';
 import Kitchen from '../screens/user/kitchen';
 import BedRoom from '../screens/user/bedroom';
 import Ad_Dashboard from '../screens/admin/ad_dashboard';
 import Ad_Home from '../screens/admin/ad_home';
 import Ad_Room from '../screens/admin/ad_room';
+import Statistic from '../screens/admin/statistic';
+
+const Stack = createNativeStackNavigator();
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -25,6 +26,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Ad_Dasboard" component={Ad_Dashboard} />
       <Stack.Screen name="Ad_Home" component={Ad_Home} />
       <Stack.Screen name="Ad_Room" component={Ad_Room} />
+      <Stack.Screen name="Statistic" component={Statistic} />
     </Stack.Navigator>
   );
 };
