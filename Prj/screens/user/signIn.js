@@ -9,6 +9,8 @@ import {
   Dimensions,
   Keyboard,
   TouchableOpacity,
+  Alert,
+  BackHandler,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {isValidSdt, isValidPass} from '../../Validation/Validate';
@@ -30,6 +32,26 @@ const SignIn = () => {
     });
   });
   const navigation = useNavigation();
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Thoát!', 'Bạn có chắc chắn muốn thoát ứng dụng?', [
+        {
+          text: 'KHÔNG',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'CÓ', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   //states for validating
   const [IDErr, setIDErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
@@ -113,7 +135,7 @@ const SignIn = () => {
         {keyboardIsShown == false && (
           <View style={{paddingBottom: 20}}>
             <TouchableOpacity
-              style={{width: '40%', alignSelf:'center' }}
+              style={{width: '40%', alignSelf: 'center'}}
               onPress={() => {
                 setIDErr(isValidSdt(ID) == true ? '' : 'ID có 4 ký tự');
                 setPasswordErr(
@@ -121,25 +143,41 @@ const SignIn = () => {
                     ? ''
                     : 'Mật khẩu phải có ít nhất 3 ký tự',
                 );
-                if (ID == 1234 && (password == 'admin' || password == 'Admin')) {
-                  navigation.navigate('Ad_Dasboard')
-                }
-                else if (isValidSdt(ID) && isValidPass(password)) {
+                if (
+                  ID == 1234 &&
+                  (password == 'admin' || password == 'Admin')
+                ) {
+                  navigation.navigate('Ad_Dasboard');
+                } else if (isValidSdt(ID) && isValidPass(password)) {
                   alert('Đăng nhập thành công');
-                  navigation.navigate('Dashboard');
+                  navigation.navigate('Dashboard',{user:ID,pass:password});
                 } else {
                   alert('Đăng nhập thất bại');
                 }
-              }}
-            >
-              <View style={{ padding: 10, marginTop: 20, width: '100%', backgroundColor: "#3f6eb9", alignItems: 'center', borderRadius: 10, }}>
-                <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 14 }}>ĐĂNG NHẬP</Text>
+              }}>
+              <View
+                style={{
+                  padding: 10,
+                  marginTop: 20,
+                  width: '100%',
+                  backgroundColor: '#3f6eb9',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}>
+                <Text
+                  style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>
+                  ĐĂNG NHẬP
+                </Text>
               </View>
             </TouchableOpacity>
-            <View style={[styles.button2, {flexDirection: 'row', justifyContent: 'center'}]}>
-              <Text style={{ color: 'black' }}>Bạn chưa có sẵn tài khoản?</Text>
+            <View
+              style={[
+                styles.button2,
+                {flexDirection: 'row', justifyContent: 'center'},
+              ]}>
+              <Text style={{color: 'black'}}>Bạn chưa có sẵn tài khoản?</Text>
               <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text style={{ color: 'blue' }}> Đăng ký</Text>
+                <Text style={{color: 'blue'}}> Đăng ký</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -226,7 +264,7 @@ const styles = StyleSheet.create({
     color: 'blue',
     marginTop: 5,
     alignSelf: 'flex-end',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   button2: {
     marginTop: 20,

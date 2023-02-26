@@ -1,14 +1,37 @@
-import React from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Dashboard from '../screens/user/dashboard';
 import Notification from '../screens/user/Notification';
 //import DrawerNavigator from './DrawerNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {View, Text} from 'react-native';
+import {View, Text, Alert, BackHandler} from 'react-native';
 import Profile from '../screens/user/Profile';
+import {useNavigation} from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
-const BottomTabNavigator = () => {
+const BottomTabNavigator = props => {
+    const navigation = useNavigation();
+  useEffect(() => {
+    if (props.route.name === 'Dashboard') {
+      console.log(1);
+      const backAction = () => {
+        Alert.alert('Đăng xuất!', 'Bạn có chắc chắn muốn đăng xuất?', [
+          {
+            text: 'KHÔNG',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'CÓ', onPress: () => navigation.navigate('SignIn')},
+        ]);
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+      return () => backHandler.remove();
+    }
+  }, [props.route]);
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
