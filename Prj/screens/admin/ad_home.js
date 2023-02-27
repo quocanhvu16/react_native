@@ -1,18 +1,16 @@
 import React, {useState, useEffect} from "react";
-import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet, TextInput } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Modal, StyleSheet, ScrollView } from "react-native";
 import Room from '../../components/admin/roomItem';
 import Icon from 'react-native-vector-icons/Feather';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Input, NativeBaseProvider } from "native-base";
+import { Input, NativeBaseProvider, Select } from "native-base";
 
 const Ad_Home = (props) => {
     const [addRoomModal, setAddRoomModal] = useState(false);
-    const [type, setType] = useState('');
     const [name, setName] = useState('');
-    const [desc, setDesc] = useState('');
+    const [desc, setDesc] = useState('Livingroom');
     const [data, setData] = useState([]);
+    const [tmp, setTmp] = useState(false);
     const home = props.route.params.data;
 
     async function fetchRooms() {
@@ -29,9 +27,9 @@ const Ad_Home = (props) => {
 
     useEffect(() => {
         fetchRooms();
-    },[])
+    },[tmp])
 
-    const addRoom = async ( type, name, desc) => {
+    const addRoom = async ( name, desc) => {
         const res = await fetch(`https://dev-smarthome.onrender.com/api/home/${home._id}/rooms`,
         {
             method: 'POST',
@@ -52,7 +50,7 @@ const Ad_Home = (props) => {
     }
 
     function renderItem(item){
-        return <Room {...item} {...props} />
+        return <Room item={item} {...props} tmp={tmp} setTmp={setTmp}/>
     }
 
     function showAddRoomModal() {
@@ -73,12 +71,17 @@ const Ad_Home = (props) => {
                                 <Text style={{ color: 'red' }}>*</Text>
                             </Text>
                             <View style= {{ marginRight: 20, borderRadius: 10 }}>
-                                <Input
-                                    placeholder="Please enter type of room"
-                                    onChangeText={text => {
-                                        setType(text);
-                                    }}
-                                    isDisabled={false} />
+                                <Select 
+                                    placeholder='Choose type of room'
+                                    // defaultValue={desc}
+                                    selectedValue={'Livingroom'}
+                                    width={150}
+                                    onValueChange={text => setDesc(text)}>
+                                    <Select.Item label='Livingroom' value="Livingroom"/>
+                                    <Select.Item label='Bathroom' value="Bathroom"/>
+                                    <Select.Item label='Kitchen' value="Kitchen"/>
+                                    <Select.Item label='Bedroom' value="Bedroom"/>
+                                </Select>
                             </View>
                             <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Tên phòng
                                 <Text style={{ color: 'red' }}>*</Text>
@@ -91,21 +94,10 @@ const Ad_Home = (props) => {
                                     }}
                                     isDisabled={false} />
                             </View>
-                            <Text style={{ color: 'black', fontSize: 18, marginBottom: 5, marginTop: 20 }}>Mô tả
-                                <Text style={{ color: 'red' }}>*</Text>
-                            </Text>
-                            <View style= {{ marginRight: 20, borderRadius: 10 }}>
-                                <Input
-                                    placeholder="Please enter description"
-                                    onChangeText={text => {
-                                        setDesc(text);
-                                    }}
-                                    isDisabled={false} />
-                            </View>
                         </View>
-                        <TouchableOpacity style={{marginTop: 30}} onPress={() => addRoom(type, name, desc)}>
+                        <TouchableOpacity style={{marginTop: 30}} onPress={() => addRoom(name, desc)}>
                             <View style={{ backgroundColor: '#3366CC', width: '40%', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 26, color: 'white', paddingTop: 5, paddingBottom: 5 }}>Save</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 26, color: 'white', paddingTop: 5, paddingBottom: 5 }}>Lưu</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -127,12 +119,15 @@ const Ad_Home = (props) => {
                     <Icon name='plus-circle' color='black' size={26}/>
                 </TouchableOpacity>
             </View>
-            <View style= {{ marginTop: 20, height: '93%' }}>
-                <FlatList
+            <ScrollView style= {{ marginTop: 20, height: '93%' }}>
+                {/* <FlatList
                     data={data}
                     renderItem = {(item) => renderItem(item)} 
-                    keyExtractor = {item => item._id}/>
-            </View>
+                    keyExtractor = {item => item._id}/> */}
+                {data.map(item =>(
+                    renderItem(item)
+                ))}
+            </ScrollView>
 
             {/* modal add room */}
             <Modal 
