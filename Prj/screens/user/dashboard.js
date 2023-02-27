@@ -26,6 +26,7 @@ import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import {
   LineChart,
   BarChart,
@@ -39,10 +40,12 @@ const width = Dimensions.get('window').width; //360
 const height = Dimensions.get('window').height; //728
 
 const Dashboard = props => {
+  const lang = useSelector(state => state.lang);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const data = useSelector(state => state.setData);
   const showMenu = useSelector(state => state.showMenu);
+  const color = useSelector(state => state.color);
   // async function fetchUser() {
   //   const requestUrl = 'https://127.0.0.1:3000/user/1';
   //   const response = await fetch(requestUrl);
@@ -132,9 +135,7 @@ const Dashboard = props => {
             width: 120,
             justifyContent: 'center',
           }}>
-          <Text style={{fontSize: 20, color: 'white'}}>
-            View profile
-          </Text>
+          <Text style={{fontSize: 20, color: 'white'}}>View profile</Text>
           <View
             style={{
               height: 1,
@@ -145,13 +146,13 @@ const Dashboard = props => {
         </TouchableOpacity>
         <View style={{paddingTop: 30, width: 215}}>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
-            Họ và tên : Vũ Quốc Anh
+            {lang === 'vn' ? 'Họ và tên' : 'Fullname'} : Vũ Quốc Anh
           </Text>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
-            Số điện thoại : 0904443580
+            {lang === 'vn' ? 'Số điện thoại' : 'Telephone'} : 0904443580
           </Text>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
-            Địa chỉ : 5/69 Trường Chinh
+            {lang === 'vn' ? 'Địa chỉ' : 'Address'} : 5/69 Trường Chinh
           </Text>
           <Text style={{fontSize: 13, color: 'black'}}>
             Email : quocanhvu16@gmail.com
@@ -170,54 +171,20 @@ const Dashboard = props => {
           transform: [{scale: scaleValue}, {translateX: offsetValue}],
         }}>
         <LinearGradient
-          colors={['#292d32', '#16171b', '#16171b']}
+          colors={[
+            color.backgroundColor1,
+            color.backgroundColor2,
+            color.backgroundColor2,
+          ]}
           style={{
             height: '100%',
             width: '100%',
             position: 'relative',
             borderRadius: borderRadius,
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              Animated.timing(scaleValue, {
-                toValue: showMenu ? 1 : 0.95,
-                duration: 300,
-                useNativeDriver: true,
-              }).start();
-              Animated.timing(offsetValue, {
-                toValue: showMenu ? 0 : 230,
-                duration: 300,
-                useNativeDriver: true,
-              }).start();
-              dispatch({type: 'setShowMenu'});
-            }}>
-            <LinearGradient
-              colors={['#292d32', '#292d32', '#16171b']}
-              style={{
-                position: 'absolute',
-                width: 30,
-                height: 30,
-                backgroundColor: '#292d32',
-                borderRadius: 15,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginLeft: width * 0.045,
-                marginTop: 8,
-                elevation: 5,
-                shadowColor: 'white',
-                shadowOpacity: 0.1,
-              }}>
-              <AntDesign
-                name={showMenu === true ? 'left' : 'bars'}
-                size={25}
-                color="white"
-              />
-            </LinearGradient>
-          </TouchableOpacity>
           <View
             style={{
-              marginTop: height * 0.063,
+              marginTop: height * 0.04,
               marginLeft: width * 0.06,
               marginRight: width * 0.06,
               display: 'flex',
@@ -225,38 +192,149 @@ const Dashboard = props => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <View style={{display: 'flex', flexDirection: 'column'}}>
-              <Text style={{fontSize: 21, color: '#7f8489'}}>Welcome</Text>
-              <Text
-                style={{
-                  fontSize: 22,
-                  color: '#fdfdfd',
-                  fontWeight: 'bold',
-                  marginTop: 5,
-                }}>
-                Vũ Quốc Anh
-              </Text>
-            </View>
-            <LinearGradient
-              // colors={['#2c3030', '#32343c']}
-              colors={['#1f86e4', '#76d0ff']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
+            <View
               style={{
-                width: 50,
-                height: 50,
-                borderRadius: 25,
-                elevation: 15,
-                shadowColor: 'white',
-                shadowOffset: {width: 0, height: 0},
-                shadowOpacity: 0.1,
-                shadowRadius: 10,
                 display: 'flex',
-                justifyContent: 'center',
+                flexDirection: 'row',
                 alignItems: 'center',
               }}>
-              <Ionicons name="notifications-outline" size={25} color="white" />
-            </LinearGradient>
+              {showMenu === false ? (
+                <Image
+                  source={profile}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    marginRight: 10,
+                    elevation: 15,
+                    shadowColor: 'red',
+                    shadowOffset: {width: 0, height: 0},
+                    shadowOpacity: 0.8,
+                    shadowRadius: 10,
+                  }}
+                />
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    Animated.timing(scaleValue, {
+                      toValue: showMenu ? 1 : 0.95,
+                      duration: 300,
+                      useNativeDriver: true,
+                    }).start();
+                    Animated.timing(offsetValue, {
+                      toValue: showMenu ? 0 : 230,
+                      duration: 300,
+                      useNativeDriver: true,
+                    }).start();
+                    dispatch({type: 'setShowMenu'});
+                  }}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    marginRight: 10,
+                    borderWidth: 1,
+                    borderColor: color.textLightColor,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <AntDesign
+                    name="left"
+                    size={30}
+                    color={color.textLightColor}
+                  />
+                </TouchableOpacity>
+              )}
+              <View style={{display: 'flex', flexDirection: 'column'}}>
+                <Text style={{fontSize: 17, color: color.textDarkColor}}>
+                  {lang === 'vn' ? 'Xin chào' : 'Welcome'}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: color.textLightColor,
+                    fontWeight: 'bold',
+                  }}>
+                  Vũ Quốc Anh
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <LinearGradient
+                // colors={['#2c3030', '#32343c']}
+                colors={[
+                  color.iconBackgroundColor1,
+                  color.iconBackgroundColor2,
+                ]}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  elevation: 15,
+                  shadowColor: 'white',
+                  shadowOffset: {width: 0, height: 0},
+                  shadowOpacity: 0.1,
+                  shadowRadius: 10,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: 20,
+                }}>
+                <Ionicons
+                  name="notifications-outline"
+                  size={25}
+                  color={color.iconColor}
+                />
+              </LinearGradient>
+              <TouchableOpacity
+                onPress={() => {
+                  Animated.timing(scaleValue, {
+                    toValue: showMenu ? 1 : 0.95,
+                    duration: 300,
+                    useNativeDriver: true,
+                  }).start();
+                  Animated.timing(offsetValue, {
+                    toValue: showMenu ? 0 : 230,
+                    duration: 300,
+                    useNativeDriver: true,
+                  }).start();
+                  dispatch({type: 'setShowMenu'});
+                }}>
+                <LinearGradient
+                  colors={[
+                    color.backgroundColor1,
+                    color.backgroundColor1,
+                    color.backgroundColor2,
+                  ]}
+                  style={{
+                    // position: 'absolute',
+                    width: 40,
+                    height: 40,
+                    backgroundColor: color.backgroundColor1,
+                    borderRadius: 20,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    elevation: 5,
+                    shadowColor: color.iconColor,
+                    shadowOpacity: 0.1,
+                  }}>
+                  <AntDesign
+                    name={showMenu === true ? 'left' : 'bars'}
+                    size={25}
+                    color={color.textLightColor}
+                  />
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </View>
           <View
             style={{
@@ -268,10 +346,23 @@ const Dashboard = props => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 22, color: '#ffffff', fontWeight: 'bold'}}>
-              Your Rooms
+            <Text
+              style={{
+                fontSize: 22,
+                color: color.textLightColor,
+                fontWeight: 'bold',
+              }}>
+              {lang === 'vn' ? 'Phòng của bạn' : 'Your Rooms'}
             </Text>
-            <Text style={{fontSize: 17, color: '#7f8489'}}>See all</Text>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch({type: 'setData', payload: data.rooms[0]});
+                navigation.navigate('Room');
+              }}>
+              <Text style={{fontSize: 17, color: color.textDarkColor}}>
+                {lang === 'vn' ? 'Xem tất cả' : 'See all'}
+              </Text>
+            </TouchableOpacity>
           </View>
           <ScrollView
             horizontal
@@ -282,7 +373,6 @@ const Dashboard = props => {
             }}>
             <View
               style={{
-                // backgroundColor: '#EEEEEE',
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 height: 170,
@@ -292,21 +382,27 @@ const Dashboard = props => {
               })}
             </View>
           </ScrollView>
-          <View
+          <LinearGradient
+            colors={[color.backgroundChartColor1, color.backgroundChartColor1]}
             style={{
               width: width * 0.88,
-              height: 225,
+              height: 240,
               position: 'absolute',
               left: width * 0.06,
-              top: height * 0.52,
+              top: height * 0.48,
               borderRadius: 20,
               borderWidth: 1,
-              borderColor: '#319ab2',
+              borderColor: color.borderChartColor,
             }}>
             <View
               style={{position: 'absolute', width: 80, height: 50, left: 20}}>
-              <Text style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>
-                Energy usage
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: color.textLightColor,
+                }}>
+                {lang === 'vn' ? 'Năng lượng' : 'Energy usage'}
               </Text>
             </View>
             <View
@@ -315,11 +411,12 @@ const Dashboard = props => {
                 width: 80,
                 height: 50,
                 left: 120,
-                // backgroundColor: 'yellow',
                 display: 'flex',
                 flexDirection: 'column',
               }}>
-              <Text style={{fontSize: 18, color: '#319ab2'}}>Today</Text>
+              <Text style={{fontSize: 18, color: color.borderChartText}}>
+                {lang === 'vn' ? 'Hôm nay' : 'Today'}
+              </Text>
               <View
                 style={{
                   display: 'flex',
@@ -327,10 +424,14 @@ const Dashboard = props => {
                   alignItems: 'center',
                 }}>
                 <Text
-                  style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: color.textLightColor,
+                  }}>
                   36
                 </Text>
-                <Text> kWh</Text>
+                <Text style={{color: color.textDarkColor}}> kWh</Text>
               </View>
             </View>
             <View
@@ -338,11 +439,13 @@ const Dashboard = props => {
                 position: 'absolute',
                 width: 100,
                 height: 50,
-                left: 200,
+                left: 210,
                 display: 'flex',
                 flexDirection: 'column',
               }}>
-              <Text style={{fontSize: 18, color: '#319ab2'}}>This Month</Text>
+              <Text style={{fontSize: 18, color: color.borderChartText}}>
+                {lang === 'vn' ? 'Tháng này' : 'This Month'}
+              </Text>
               <View
                 style={{
                   display: 'flex',
@@ -350,10 +453,14 @@ const Dashboard = props => {
                   alignItems: 'center',
                 }}>
                 <Text
-                  style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: color.textLightColor,
+                  }}>
                   821
                 </Text>
-                <Text> kWh</Text>
+                <Text style={{color: color.textDarkColor}}> kWh</Text>
               </View>
             </View>
             <LineChart
@@ -378,29 +485,29 @@ const Dashboard = props => {
               // yAxisSuffix="k"
               yAxisInterval={1} // optional, defaults to 1
               chartConfig={{
-                backgroundColor: '#0040e2',
-                backgroundGradientFrom: '#16171b',
-                backgroundGradientTo: '#16171b',
+                // backgroundColor: '#e20048',
+                backgroundGradientFrom: color.backgroundChartColor1,
+                backgroundGradientTo: color.backgroundChartColor1,
                 decimalPlaces: 2, // optional, defaults to 2dp
                 color: (opacity = 1) => `rgba(31, 134, 228, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                labelColor: (opacity = 1) => color.textLightColor,
                 style: {
                   borderRadius: 16,
                 },
                 propsForDots: {
                   r: '6',
                   strokeWidth: '2',
-                  stroke: '#26a1ff',
+                  stroke: color.nodeChartColor,
                 },
               }}
               bezier
               style={{
                 borderRadius: 16,
                 position: 'absolute',
-                top: 52,
+                top: 60,
               }}
             />
-          </View>
+          </LinearGradient>
           <TabNavBar home={true} />
         </LinearGradient>
       </Animated.View>
