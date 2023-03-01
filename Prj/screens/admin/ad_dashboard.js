@@ -150,7 +150,7 @@ const Ad_Dasboard = (props) => {
                 </TouchableOpacity>
             </View>
             <ScrollView style= {{ marginTop: 20, height: '93%' }}>
-                {data.map(item => (
+                {data.map((item, index) => (
                     renderItem(item)
                 ))}
             </ScrollView>

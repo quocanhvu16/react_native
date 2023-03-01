@@ -9,7 +9,6 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
