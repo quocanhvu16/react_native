@@ -31,6 +31,7 @@ const bathRoom = {
 const profile = {
   uri: 'https://i.pinimg.com/originals/44/fa/f8/44faf83feb61a540659d50029db4b0ac.jpg',
 };
+
 export {
   background,
   image,

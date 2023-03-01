@@ -8,6 +8,7 @@ import {
   Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Material from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,6 +16,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const TabNavBar = props => {
+  const color = useSelector(state => state.color);
   const navigation = useNavigation();
   const [elevationHome, setElevationHome] = useState(0);
   const [iconHomeColor, setIconHomeColor] = useState('#1c1a23');
@@ -22,43 +24,50 @@ const TabNavBar = props => {
   const [iconSettingColor, setIconSettingColor] = useState('#1c1a23');
   useEffect(() => {
     if (props.home) {
-      setIconHomeColor('#1f86e4');
+      setIconHomeColor(color.iconActive);
       setElevationHome(15);
     } else {
-      setIconHomeColor('#7f8489');
+      setIconHomeColor(color.iconUnActive);
       setElevationHome(0);
     }
     if (props.setting) {
-      setIconSettingColor('#1f86e4');
+      setIconSettingColor(color.iconActive);
       setElevationSetting(15);
     } else {
       setElevationSetting(0);
-      setIconSettingColor('#7f8489');
+      setIconSettingColor(color.iconUnActive);
     }
   }, [props]);
   const showMenu = useSelector(state => state.showMenu);
   return (
     <LinearGradient
-      colors={['#16171b', '#353a40']}
+      colors={[color.backgroundColorNavbar1, color.backgroundColorNavbar1]}
       style={{
         width: width,
         height: 80,
         display: 'flex',
         flexDirection: 'row',
         borderBottomLeftRadius: showMenu === true ? 20 : 0,
-        position: 'relative',
+        position: 'absolute',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
         elevation: 20,
         shadowOffset: {width: 0, height: 0},
         shadowOpacity: 0.8,
         shadowRadius: 10,
-        shadowColor: 'white',
+        shadowColor: color.borderColor,
+        bottom: 0,
         // borderWidth:1,
-        // borderColor:'white'
+        // borderColor:color.borderColor
       }}>
       <LinearGradient
-        colors={['#16171b', '#16171b', '#16171b', '#16171b', '#353a40']}
+        colors={[
+          color.backgroundColorNavbar2,
+          color.backgroundColorNavbar2,
+          color.backgroundColorNavbar2,
+          color.backgroundColorNavbar2,
+          color.backgroundColorNavbar2,
+        ]}
         style={{
           position: 'absolute',
           width: 70,
@@ -69,23 +78,36 @@ const TabNavBar = props => {
           borderRadius: 35,
         }}
       />
-      <LinearGradient
-        colors={['#1f86e4', '#78d0ff']}
+      <TouchableOpacity
         style={{
           position: 'absolute',
           width: 60,
           height: 60,
-          backgroundColor: '#c4c4c4',
+          // backgroundColor: '#c4c4c4',
           top: -30,
           left: width / 2 - 30,
           borderRadius: 30,
           elevation: 15,
-          shadowColor: '#19a3db',
+          shadowColor: color.shadowColorNavbar,
           shadowOffset: {width: 0, height: 0},
           shadowOpacity: 0.5,
-          shadowRadius: 10,
-        }}
-      />
+          shadowRadius: 30,
+        }}>
+        <LinearGradient
+          colors={[color.iconBackgroundColor1, color.iconBackgroundColor2]}
+          style={{
+            position: 'absolute',
+            width: 60,
+            height: 60,
+            backgroundColor: '#c4c4c4',
+            borderRadius: 30,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Material name="pencil-outline" size={30} color={color.iconColor} />
+        </LinearGradient>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Dashboard');
@@ -105,8 +127,8 @@ const TabNavBar = props => {
             borderWidth: 0,
             borderRadius: 20,
             elevation: elevationHome,
-            shadowColor: '#19a3db',
-            shadowOpacity: 0.8,
+            shadowColor: color.shadowColorNavbar,
+            shadowOpacity: 0.5,
             shadowRadius: 10,
           }}
         />
@@ -144,9 +166,13 @@ const TabNavBar = props => {
             borderWidth: 0,
             borderRadius: 20,
             elevation: elevationSetting,
-            shadowColor: '#19a3db',
-            shadowOpacity: 0.8,
+            shadowColor: color.shadowColorNavbar,
+            shadowOpacity: 0.1,
             shadowRadius: 10,
+            shadowOffset: {
+              width: 10,
+              height: 10,
+            },
           }}
         />
         <Icon

@@ -10,24 +10,36 @@ const initData = {
       name: 'Living Room',
       image: livingRoom,
       temperature: 20,
-      lamp1: false,
+      lamp: false,
       humidity: 60,
-      lamp2: false,
+      airConditioner: false,
+      smartTv: false,
+      router: false,
     },
     {
       name: 'Kitchen',
       image: kitchen,
       temperature: 20,
-      lamp1: false,
+      lamp: false,
       humidity: 60,
+      refrigerator: false,
     },
     {
       name: 'Bed Room',
       image: bedRoom,
       temperature: 20,
-      lamp1: false,
-      lamp2: false,
+      lamp: false,
+      airConditioner: false,
+      smartTv: false,
       humidity: 60,
+    },
+    {
+      name: 'Bath Room',
+      image: bathRoom,
+      temperature: 20,
+      lamp: false,
+      humidity: 60,
+      washingMachine: false,
     },
   ],
 };
@@ -37,20 +49,13 @@ const setData = (state = initData, action) => {
     case 'getData':
       state = state;
       break;
-    case 'putData':
-      state = action.payload;
-      break;
     case 'changeLamp':
-      const name = action.payload.name;
-      const number = action.payload.number;
-      const stateLamp = action.payload.state;
-      const dataTemp = {...initData};
-      for (let i = 0; i < dataTemp.rooms.length; i++) {
-        if (dataTemp.rooms[i].name === name) {
-          dataTemp.rooms[i][`lamp${number}`] = stateLamp;
-        }
-      }
-      state = dataTemp;
+      const index = action.payload.index;
+      // const stateTemp = state;
+      state.rooms[index] = {
+        ...state.rooms[index],
+        lamp: action.payload.stateLamp,
+      };
       break;
   }
   return state;
