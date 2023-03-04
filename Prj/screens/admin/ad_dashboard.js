@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { View, Text, FlatList, TouchableOpacity, Modal, Dimensions, ScrollView } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Modal, Dimensions, ScrollView, DevSettings } from "react-native";
 import Home from '../../components/admin/homeItem';
 import Icon from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -47,23 +47,28 @@ const Ad_Dasboard = (props) => {
     }
 
     const addHome = async ( desc, address, code) => {
-        const res = await fetch('https://dev-smarthome.onrender.com/api/home',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
-
-            },
-            body: JSON.stringify({ name: 'default name', desc, address, code }) 
+        if (desc, address, code) {
+            const res = await fetch('https://dev-smarthome.onrender.com/api/home',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
+    
+                },
+                body: JSON.stringify({ name: 'default name', desc, address, code }) 
+            }
+            )
+            const json = await res.json();
+            console.log(json)
+            alert('Thêm nhà thành công');
+            setAddHomeModal(false);
+            fetchHome();
         }
-        )
-        const json = await res.json();
-        console.log(json)
-        alert('Thêm nhà thành công');
-        setAddHomeModal(false);
-        fetchHome();
+        else {
+            alert('Bạn chưa nhập đủ thông tin')
+        }
     }
 
     function showAddHomeModal() {

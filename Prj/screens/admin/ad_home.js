@@ -30,23 +30,28 @@ const Ad_Home = (props) => {
     },[tmp])
 
     const addRoom = async ( name, desc) => {
-        const res = await fetch(`https://dev-smarthome.onrender.com/api/home/${home._id}/rooms`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
-
-            },
-            body: JSON.stringify({ name, desc }) 
+        if(name && desc) {
+            const res = await fetch(`https://dev-smarthome.onrender.com/api/home/${home._id}/rooms`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
+    
+                },
+                body: JSON.stringify({ name, desc }) 
+            }
+            )
+            const json = await res.json();
+            console.log(json)
+            alert('Thêm phòng thành công');
+            setAddRoomModal(false);
+            fetchRooms();
         }
-        )
-        const json = await res.json();
-        console.log(json)
-        alert('Thêm phòng thành công');
-        setAddRoomModal(false);
-        fetchRooms();
+        else {
+            alert("Bạn chưa nhập đủ thông tin")
+        }
     }
 
     function renderItem(item){

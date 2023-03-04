@@ -19,6 +19,8 @@ const Ad_Room = (props) => {
     const [tmp, setTmp] = useState(false);
     const [typePage, setTypePage] = useState('light')
     const room = props.route.params.data;
+    console.log('name: ', name)
+    console.log('desc: ', desc)
 
     async function fetchLights() {
         const res = await fetch(`https://dev-smarthome.onrender.com/api/room/${room._id}/light`, {
@@ -50,33 +52,38 @@ const Ad_Room = (props) => {
     },[tmp])
 
     const addDevice = async ( type, name, desc) => {
-        let url = ''
-        if (type === 'den') url = `https://dev-smarthome.onrender.com/api/room/${room._id}/light`;
-        else url = `https://dev-smarthome.onrender.com/api/room/${room._id}/air`;
-        const res = await fetch(url,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
-
-            },
-            body: JSON.stringify({ type, name, desc }) 
+        if(type, name, desc) {
+            let url = ''
+            if (type === 'den') url = `https://dev-smarthome.onrender.com/api/room/${room._id}/light`;
+            else url = `https://dev-smarthome.onrender.com/api/room/${room._id}/air`;
+            const res = await fetch(url,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk'
+    
+                },
+                body: JSON.stringify({ type, name, desc }) 
+            }
+            )
+            const json = await res.json();
+            console.log(json)
+            alert('Thêm thiết bị thành công');
+            if (type === 'den') {
+                fetchLights();
+                setTypePage('light')
+            }
+            else if (type== 'air') {
+                fetchAirs();
+                setTypePage('air')
+            }
+            setAddRoomModal(false);
         }
-        )
-        const json = await res.json();
-        console.log(json)
-        alert('Thêm thiết bị thành công');
-        if (type === 'den') {
-            fetchLights();
-            setTypePage('light')
+        else {
+            alert('Bạn chưa nhập đủ thông tin')
         }
-        else if (type== 'air') {
-            fetchAirs();
-            setTypePage('air')
-        }
-        setAddRoomModal(false);
     }
 
     function renderItem(item){
@@ -84,6 +91,7 @@ const Ad_Room = (props) => {
     }
 
     function showAddDeviceModal() {
+        
         return(
             <NativeBaseProvider>
                 <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
