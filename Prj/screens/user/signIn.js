@@ -137,20 +137,25 @@ const SignIn = () => {
             <TouchableOpacity
               style={{width: '40%', alignSelf: 'center'}}
               onPress={() => {
-                setIDErr(isValidSdt(ID) == true ? '' : 'ID có 4 ký tự');
+                setIDErr(isValidSdt(ID) == 0 ? '' : 'ID không được để trống');
                 setPasswordErr(
-                  isValidPass(password) == true
+                  isValidPass(password) == 0
                     ? ''
-                    : 'Mật khẩu phải có ít nhất 3 ký tự',
+                    : isValidPass(password) == 1
+                    ? 'Mật khẩu không được để trống'
+                    : '',
                 );
                 if (
                   ID == 1234 &&
                   (password == 'admin' || password == 'Admin')
                 ) {
                   navigation.navigate('Ad_Dasboard');
-                } else if (isValidSdt(ID) && isValidPass(password)) {
+                } else if (
+                  isValidSdt(ID) === 0 &&
+                  isValidPass(password) !== 1
+                ) {
                   alert('Đăng nhập thành công');
-                  navigation.navigate('Dashboard',{user:ID,pass:password});
+                  navigation.navigate('Dashboard', {user: ID, pass: password});
                 } else {
                   alert('Đăng nhập thất bại');
                 }

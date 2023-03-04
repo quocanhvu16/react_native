@@ -46,18 +46,84 @@ const Dashboard = props => {
   const data = useSelector(state => state.setData);
   const showMenu = useSelector(state => state.showMenu);
   const color = useSelector(state => state.color);
-  // async function fetchUser() {
-  //   const requestUrl = 'https://127.0.0.1:3000/user/1';
-  //   const response = await fetch(requestUrl);
-  //   const responseJson = await response.json();
-  //   console.log(responseJson);
-  //   return responseJson;
-  // }
-  // useLayoutEffect(() => {
-  //   fetchUser()
-  //     .then(result => setData(result))
-  //     .catch(error => console.log('error', error));
-  // }, []);
+  const [dataFetch, setData] = useState({});
+  const [dataAllRooms, setDataAllRooms] = useState([]);
+  async function getHome() {
+    const requestUrl =
+      'https://dev-smarthome.onrender.com/api/home/63fcb8c250d662e4f644fb64';
+    const response = await fetch(requestUrl, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk',
+      },
+    });
+    const responseJson = await response.json();
+    return responseJson;
+  }
+  async function getAllRoom() {
+    const requestUrl =
+      'https://dev-smarthome.onrender.com/api/home/63fcb8c250d662e4f644fb64/rooms';
+    const response = await fetch(requestUrl, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk',
+      },
+    });
+    const responseJson = await response.json();
+    return responseJson;
+  }
+  useEffect(() => {
+    getHome()
+      .then(result => setData(result))
+      .catch(error => console.log('error', error));
+    getAllRoom()
+      .then(result => setDataAllRooms(result))
+      .catch(error => console.log('error', error));
+  }, []);
+  useEffect(() => {
+    console.log('dataHome', dataFetch);
+  }, [dataFetch]);
+  useLayoutEffect(() => {
+    if (dataAllRooms.length > 0) {
+      for (let i = 0; i < dataAllRooms.length; i++) {
+        if (dataAllRooms[i]?.desc === 'Livingroom') {
+          dataAllRooms[i].humidity = 60;
+          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].lamp = false;
+          dataAllRooms[i].airConditioner = false;
+          dataAllRooms[i].smartTv = false;
+          dataAllRooms[i].router = false;
+        }
+        if (dataAllRooms[i]?.desc === 'Kitchen') {
+          dataAllRooms[i].humidity = 60;
+          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].lamp = false;
+          dataAllRooms[i].refrigerator = false;
+        }
+        if (dataAllRooms[i]?.desc === 'Bedroom') {
+          dataAllRooms[i].humidity = 60;
+          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].lamp = false;
+          dataAllRooms[i].airConditioner = false;
+          dataAllRooms[i].smartTv = false;
+        }
+        if (dataAllRooms[i]?.desc === 'Bathroom') {
+          dataAllRooms[i].humidity = 60;
+          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].lamp = false;
+          dataAllRooms[i].washingMachine = false;
+        }
+      }
+      const dataAllRoomsTemp = [...dataAllRooms];
+      dispatch({type: 'getData', payload: dataAllRoomsTemp});
+    }
+  }, [dataAllRooms]);
   useEffect(() => {
     const backAction = () => {
       Alert.alert('Đăng xuất!', 'Bạn có chắc chắn muốn đăng xuất?', [
@@ -121,38 +187,41 @@ const Dashboard = props => {
         />
         <Text
           style={{
-            fontSize: 40,
+            fontSize: 30,
             fontWeight: 'bold',
             color: 'black',
             marginTop: 0,
             marginBottom: 20,
+            width: 210,
           }}>
-          Shanks
+          {dataFetch.name}
         </Text>
         <TouchableOpacity
           style={{
             height: 40,
-            width: 120,
+            // width: 120,
             justifyContent: 'center',
           }}>
-          <Text style={{fontSize: 20, color: 'white'}}>View profile</Text>
+          <Text style={{fontSize: 20, color: 'white'}}>
+            {lang === 'vn' ? 'Xem thông tin' : 'View Profile'}
+          </Text>
           <View
             style={{
               height: 1,
-              width: 110,
+              width: 125,
               backgroundColor: 'white',
             }}
           />
         </TouchableOpacity>
         <View style={{paddingTop: 30, width: 215}}>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
-            {lang === 'vn' ? 'Họ và tên' : 'Fullname'} : Vũ Quốc Anh
+            {lang === 'vn' ? 'Họ và tên' : 'Fullname'} : {dataFetch.name}
           </Text>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
             {lang === 'vn' ? 'Số điện thoại' : 'Telephone'} : 0904443580
           </Text>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
-            {lang === 'vn' ? 'Địa chỉ' : 'Address'} : 5/69 Trường Chinh
+            {lang === 'vn' ? 'Địa chỉ' : 'Address'} : {dataFetch.address}
           </Text>
           <Text style={{fontSize: 13, color: 'black'}}>
             Email : quocanhvu16@gmail.com
@@ -256,7 +325,7 @@ const Dashboard = props => {
                     color: color.textLightColor,
                     fontWeight: 'bold',
                   }}>
-                  Vũ Quốc Anh
+                  {dataFetch?.name}
                 </Text>
               </View>
             </View>
@@ -356,7 +425,7 @@ const Dashboard = props => {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                dispatch({type: 'setData', payload: data.rooms[0]});
+                dispatch({type: 'setData', payload: dataAllRooms[0]});
                 navigation.navigate('Room');
               }}>
               <Text style={{fontSize: 17, color: color.textDarkColor}}>
@@ -377,7 +446,7 @@ const Dashboard = props => {
                 flexWrap: 'wrap',
                 height: 170,
               }}>
-              {data.rooms?.map((room, index) => {
+              {dataAllRooms?.map((room, index) => {
                 return <Room data={room} key={index} />;
               })}
             </View>

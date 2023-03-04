@@ -46,9 +46,55 @@ const Room = props => {
   const dataRoom = useSelector(state => state.dataRoom);
   const datas = useSelector(state => state.setData);
   const dispatch = useDispatch();
+  const lampLivingroom = useSelector(state => state.lampLivingRoom);
+  const lampKitchen = useSelector(state => state.lampKitchen);
+  const lampBedroom = useSelector(state => state.lampBedRoom);
+  const lampBathroom = useSelector(state => state.lampBathRoom);
   const {name, image, ...rest} = dataRoom;
   const [nameEng, setNameEng] = useState(name);
   const [nameVn, setNameVn] = useState('');
+  const [lamp, setLamp] = useState(false);
+  const [airConditioner, setAirConditioner] = useState(false);
+  const [smartTv, setSmartTv] = useState(false);
+  const [router, setRouter] = useState(false);
+  const [refrigerator, setRefrigerator] = useState(false);
+  const [washingMachine, setWashingMachine] = useState(false);
+  async function turnOffLed() {
+    console.log('Tat den');
+    const requestUrl =
+      'https://dev-smarthome.onrender.com/api/adruino/turn-off-led';
+    const response = await fetch(requestUrl, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk',
+      },
+    });
+  }
+  async function turnOnLed() {
+    console.log('Bat den');
+    const requestUrl =
+      'https://dev-smarthome.onrender.com/api/adruino/turn-on-led';
+    const response = await fetch(requestUrl, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk',
+      },
+    });
+  }
+  useEffect(() => {
+    if (lamp === false) {
+      turnOffLed();
+    }
+    if (lamp === true) {
+      turnOnLed();
+    }
+  }, [lamp]);
   useEffect(() => {
     if (lang === 'vn') {
       if (dataRoom.name === 'Living Room') {
@@ -95,30 +141,18 @@ const Room = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [lamp, setLamp] = useState(false);
-  const [airConditioner, setAirConditioner] = useState(false);
-  const [smartTv, setSmartTv] = useState(false);
-  const [router, setRouter] = useState(false);
-  const [refrigerator, setRefrigerator] = useState(false);
-  const [washingMachine, setWashingMachine] = useState(false);
-  useEffect(() => {
-    if (dataRoom.hasOwnProperty('lamp')) {
-      setLamp(dataRoom.lamp);
+  useLayoutEffect(() => {
+    if (dataRoom?.desc === 'Livingroom') {
+      setLamp(lampLivingroom);
     }
-    if (dataRoom.hasOwnProperty('airConditioner')) {
-      setAirConditioner(dataRoom.airConditioner);
+    if (dataRoom?.desc === 'Bedroom') {
+      setLamp(lampBedroom);
     }
-    if (dataRoom.hasOwnProperty('smartTv')) {
-      setSmartTv(dataRoom.smartTv);
+    if (dataRoom?.desc === 'Bathroom') {
+      setLamp(lampBathroom);
     }
-    if (dataRoom.hasOwnProperty('router')) {
-      setRouter(dataRoom.router);
-    }
-    if (dataRoom.hasOwnProperty('refrigerator')) {
-      setRefrigerator(dataRoom.refrigerator);
-    }
-    if (dataRoom.hasOwnProperty('washingMachine')) {
-      setWashingMachine(dataRoom.washingMachine);
+    if (dataRoom?.desc === 'Kitchen') {
+      setLamp(lampKitchen);
     }
   }, [dataRoom]);
   return (
@@ -216,7 +250,7 @@ const Room = props => {
                 {lang === 'vn' ? 'Tất cả' : 'All'}
               </Text>
             </TouchableOpacity>
-            {datas.rooms.map(data => {
+            {datas?.map(data => {
               let dataTemp = {...data};
               if (data.name === 'Living Room') {
                 dataTemp.nameVn = 'Phòng khách';
@@ -232,7 +266,10 @@ const Room = props => {
               }
               return (
                 <TouchableOpacity
-                  onPress={() => dispatch({type: 'setData', payload: data})}
+                  onPress={() => {
+                    dispatch({type: 'setData', payload: data});
+                    console.log(data);
+                  }}
                   style={{
                     height: 32,
                     display: 'flex',
@@ -426,21 +463,32 @@ const Room = props => {
                         onPress={() => {
                           setLamp(() => {
                             const lampTemp = !lamp;
-                            // const dataRoomTemp = {...dataRoom};
-                            // // console.log(dataRoomTemp===dataRoom)
-                            // dataRoomTemp.lamp = lampTemp;
-                            // // console.log(datas)
-                            // // const index = datas.rooms.indexOf(dataRoom);
-                            // // console.log(index)
-                            // const datasTemp = {...datas};
-                            // datasTemp.rooms[0] = dataRoomTemp;
-                            // // console.log(datasTemp.rooms[0]);
+                            if (dataRoom.desc === 'Livingroom') {
+                              dispatch({
+                                type: 'changeLampLivingroom',
+                                payload: lampTemp,
+                              });
+                            }
+                            if (dataRoom.desc === 'Bedroom') {
+                              dispatch({
+                                type: 'changeLampBedroom',
+                                payload: lampTemp,
+                              });
+                            }
+                            if (dataRoom.desc === 'Bathroom') {
+                              dispatch({
+                                type: 'changeLampBathroom',
+                                payload: lampTemp,
+                              });
+                            }
+                            if (dataRoom.desc === 'Kitchen') {
+                              dispatch({
+                                type: 'changeLampKitchen',
+                                payload: lampTemp,
+                              });
+                            }
                             return lampTemp;
                           });
-                          // dispatch({
-                          //   type: 'changeLamp',
-                          //   payload: {index: 0, stateLamp: !lamp},
-                          // });
                         }}>
                         <LinearGradient
                           colors={

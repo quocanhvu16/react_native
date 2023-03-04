@@ -15,7 +15,12 @@ import {
 import React, {useState, useEffect} from 'react';
 import {user, home, pass, retypepass, background} from '../../image/image';
 import {useNavigation} from '@react-navigation/native';
-import {isValidSdt, isValidPass} from '../../Validation/Validate';
+import {
+  isValidSdt,
+  isValidPass,
+  isValidName,
+  isValidMail,
+} from '../../Validation/Validate';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const windowWidth = Dimensions.get('window').width;
@@ -48,9 +53,12 @@ const SignUp = () => {
   const [passwordErr, setPasswordErr] = useState('');
   const [ID, setID] = useState('');
   const [name, setName] = useState('');
+  const [nameErr, setNameErr] = useState('');
   const [password, setPassword] = useState('');
   const [retypassword, setretyPassword] = useState('');
   const [retypasswordErr, setretyPasswordErr] = useState('');
+  const [mail, setMail] = useState('');
+  const [mailErr, setMailErr] = useState('');
   const [pwHidden1, setpwHidden1] = useState(true);
   const [iconName1, seticonName1] = useState('eye-off');
   const [pwHidden2, setpwHidden2] = useState(true);
@@ -73,7 +81,12 @@ const SignUp = () => {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({username: ID, email, name, password}),
+        body: JSON.stringify({
+          username: ID,
+          email: email,
+          name: name,
+          password: password,
+        }),
       },
     );
     const json = await res.json();
@@ -104,7 +117,11 @@ const SignUp = () => {
               placeholderTextColor={'gray'}
             />
           </View>
-          {keyboardIsShown == false && <View style={{height: 35}} />}
+          {keyboardIsShown == false && (
+            <View style={{marginVertical: 5, marginLeft: 25}}>
+              <Text style={{color: 'red', fontSize: 10}}>{nameErr}</Text>
+            </View>
+          )}
           {keyboardIsShown == true && <View style={{height: 10}} />}
           <View style={styles.input_text}>
             <Image source={home} style={styles.icon} />
@@ -118,8 +135,30 @@ const SignUp = () => {
             />
           </View>
           {keyboardIsShown == false && (
-            <View style={{marginVertical: 10, marginLeft: 25}}>
+            <View style={{marginVertical: 5, marginLeft: 25}}>
               <Text style={{color: 'red', fontSize: 10}}>{IDErr}</Text>
+            </View>
+          )}
+          {keyboardIsShown == true && <View style={{height: 10}} />}
+          <View style={styles.input_text}>
+            <Icon
+              name="mail"
+              size={25}
+              color="#333"
+              style={{marginRight: 0, marginTop: 7}}
+            />
+            <TextInput
+              onChangeText={text => {
+                setMail(text);
+              }}
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor={'gray'}
+            />
+          </View>
+          {keyboardIsShown == false && (
+            <View style={{marginVertical: 5, marginLeft: 25}}>
+              <Text style={{color: 'red', fontSize: 10}}>{mailErr}</Text>
             </View>
           )}
           {keyboardIsShown == true && <View style={{height: 10}} />}
@@ -154,7 +193,7 @@ const SignUp = () => {
             </TouchableOpacity>
           </View>
           {keyboardIsShown == false && (
-            <View style={{marginVertical: 10, marginLeft: 25}}>
+            <View style={{marginVertical: 5, marginLeft: 25}}>
               <Text style={{color: 'red', fontSize: 10}}>{passwordErr}</Text>
             </View>
           )}
@@ -202,23 +241,33 @@ const SignUp = () => {
           <View style={styles.button}>
             <Button
               onPress={() => {
-                setIDErr(isValidSdt(ID) == true ? '' : 'ID có 4 ký tự');
                 setPasswordErr(
-                  isValidPass(password) == true
+                  isValidPass(password) === 0
                     ? ''
-                    : 'Mật khẩu phải có ít nhất 3 ký tự',
+                    : isValidPass(password) === 1
+                    ? 'Mật khẩu không được để trống'
+                    : 'Mật khẩu chứa ít nhất 8 ký tự, trong đó có ít nhất 1 chữ số, 1 chữ in hoa và 1 chữ thường',
                 );
+                setNameErr(
+                  isValidName(name) === 0
+                    ? ''
+                    : isValidName(name) === 2
+                    ? 'Không được để trống họ tên'
+                    : 'HỌ tên chỉ chứa chữ cái và khoảng trắng',
+                );
+                setMailErr(isValidMail(mail) === 0 ? '' : 'Mail không hợp lệ');
                 setretyPasswordErr(
                   password === retypassword
                     ? ''
                     : 'Xác thực mật khẩu không khớp',
                 );
                 if (
-                  isValidSdt(ID) &&
-                  isValidPass(password) &&
-                  password === retypassword
+                  isValidPass(password) === 0 &&
+                  password === retypassword &&
+                  isValidName(name) === 0 &&
+                  isValidMail(mail) === 0
                 ) {
-                  checkSignUp(ID.toString(), 'test5@gmail.com', name, password);
+                  checkSignUp(ID, mail, name, password);
                 } else {
                   alert('Đăng ký thất bại');
                 }
@@ -231,7 +280,7 @@ const SignUp = () => {
         <View
           style={[
             styles.input_text,
-            {justifyContent: 'center', marginBottom: 40},
+            {justifyContent: 'center', marginBottom: 20},
           ]}>
           <Text style={styles.text}>Bạn đã có sẵn tài khoản?</Text>
           <TouchableOpacity onPress={() => navigation.goBack()}>

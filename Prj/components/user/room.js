@@ -8,19 +8,21 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch, useSelector} from 'react-redux';
+import {bathRoom, kitchen, livingRoom, bedRoom} from './../../image/image';
 
 const Room = props => {
   const lang = useSelector(state => state.lang);
   const color = useSelector(state => state.color);
+  const [image, setImage] = useState();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
+  const data = props.data;
   const handleOnPress = () => {
-    dispatch({type: 'setData', payload: props.data});
+    dispatch({type: 'setData', payload: data});
     navigation.navigate('Room', {data: props.data});
   };
-  const data = props.data;
-  let {name, image, ...rest} = data;
+  let {__v, _id, name, desc, home, lights, humidity, temperature, ...rest} =
+    data;
   const parameter = Object.keys(rest);
   const [nameTemp, setNameTemp] = useState('');
   useEffect(() => {
@@ -53,6 +55,20 @@ const Room = props => {
       }
     }
   }, [lang]);
+  useEffect(() => {
+    if (desc === 'Livingroom') {
+      setImage(livingRoom);
+    }
+    if (desc === 'Bedroom') {
+      setImage(bedRoom);
+    }
+    if (desc === 'Bathroom') {
+      setImage(bathRoom);
+    }
+    if (desc === 'Kitchen') {
+      setImage(kitchen);
+    }
+  }, [desc]);
   return (
     <TouchableOpacity onPress={() => handleOnPress()}>
       <LinearGradient

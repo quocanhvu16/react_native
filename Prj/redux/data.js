@@ -47,15 +47,7 @@ const initData = {
 const setData = (state = initData, action) => {
   switch (action.type) {
     case 'getData':
-      state = state;
-      break;
-    case 'changeLamp':
-      const index = action.payload.index;
-      // const stateTemp = state;
-      state.rooms[index] = {
-        ...state.rooms[index],
-        lamp: action.payload.stateLamp,
-      };
+      state = action.payload;
       break;
   }
   return state;
