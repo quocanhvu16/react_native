@@ -63,6 +63,7 @@ const Ad_Dasboard = (props) => {
             const json = await res.json();
             console.log(json)
             alert('Thêm nhà thành công');
+            id =  (Math.random() + 1).toString(36).substring(6);
             setAddHomeModal(false);
             fetchHome();
         }
