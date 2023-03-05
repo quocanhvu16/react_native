@@ -27,6 +27,8 @@ const Ad_Home = (props) => {
 
     useEffect(() => {
         fetchRooms();
+        setDesc('LivingRoom')
+        setName('')
     },[tmp])
 
     const addRoom = async ( name, desc) => {
@@ -59,6 +61,7 @@ const Ad_Home = (props) => {
     }
 
     function showAddRoomModal() {
+        
         return(
             <NativeBaseProvider>
                 <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -79,7 +82,8 @@ const Ad_Home = (props) => {
                                 <Select 
                                     placeholder='Choose type of room'
                                     // defaultValue={desc}
-                                    selectedValue={'Livingroom'}
+                                    defaultValue={'Livingroom'}
+                                    // selectedValue={'Livingroom'}
                                     width={150}
                                     onValueChange={text => setDesc(text)}>
                                     <Select.Item label='Livingroom' value="Livingroom"/>

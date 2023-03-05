@@ -82,7 +82,7 @@ const MenuLeft = (props) => {
                         <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 30, fontSize: 20, color: 'black' }}>Bạn có muốn đăng xuất?</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
                             <TouchableOpacity
-                                onPress={() => props.navigation.navigate('SignIn')} 
+                                onPress={() => props.navigation.navigate('SignIn', {user: '', password: ''})} 
                                 style= {{width: '40%', height: 50, borderWidth: 3, borderColor: Constants.theme_color, borderRadius: 10, alignItems: 'center', backgroundColor: Constants.theme_color, justifyContent: 'center' }}>
                                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Có</Text>
                             </TouchableOpacity>

@@ -163,7 +163,7 @@ const Dashboard = props => {
           text: 'CÓ',
           onPress: () => {
             dispatch({type: 'setShowMenu1', payload: false});
-            navigation.navigate('SignIn');
+            navigation.navigate('SignIn', {user: '', ID: ''});
           },
         },
       ]);
@@ -242,9 +242,6 @@ const Dashboard = props => {
         <View style={{paddingTop: 30, width: 215}}>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
             {lang === 'vn' ? 'Họ và tên' : 'Fullname'} : {dataUser.user.name}
-          </Text>
-          <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
-            {lang === 'vn' ? 'Số điện thoại' : 'Telephone'} : 0904443580
           </Text>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
             {lang === 'vn' ? 'Địa chỉ' : 'Address'} : {dataFetch.address}

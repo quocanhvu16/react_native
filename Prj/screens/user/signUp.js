@@ -97,8 +97,8 @@ const SignUp = () => {
       alert(json.message);
     } else {
       alert('Đăng ký thành công');
-      dispatch({type: 'setInfor', payload: {ID: ID, password: password}});
-      navigation.navigate('SignIn');
+      // dispatch({type: 'setInfor', payload: {ID: ID, password: password}});
+      navigation.navigate('SignIn', {user: ID, password: password});
     }
     // alert('Đăng ký thành công');
     // navigation.navigate('SignIn');

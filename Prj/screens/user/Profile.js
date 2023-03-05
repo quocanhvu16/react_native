@@ -57,7 +57,7 @@ const Profile = () => {
         onPress: () => null,
         style: 'cancel',
       },
-      {text: 'CÓ', onPress: () => navigation.navigate('SignIn')},
+      {text: 'CÓ', onPress: () => navigation.navigate('SignIn', {user: '', ID: ''})},
     ]);
   };
   const [setting, setSetting] = useState(false);
