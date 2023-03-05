@@ -85,11 +85,18 @@ const SignUp = () => {
           username: ID,
           email: email,
           name: name,
+          code: ID,
           password: password,
         }),
       },
     );
     const json = await res.json();
+    if (json.hasOwnProperty('message')) {
+      alert(json.message);
+    } else {
+      alert('Đăng ký thành công');
+      navigation.navigate('SignIn');
+    }
     // alert('Đăng ký thành công');
     // navigation.navigate('SignIn');
   };
@@ -268,8 +275,6 @@ const SignUp = () => {
                   isValidMail(mail) === 0
                 ) {
                   checkSignUp(ID, mail, name, password);
-                } else {
-                  alert('Đăng ký thất bại');
                 }
               }}
               title="Tạo tài khoản"

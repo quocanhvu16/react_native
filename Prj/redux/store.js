@@ -8,6 +8,9 @@ import lampLivingRoom from './lampLivingroom';
 import lampKitchen from './lampKitchen';
 import lampBedroom from './lampBedroom';
 import lampBathroom from './lampBathroom';
+import dataUser from './dataUser';
+import freezer from './freezer';
+import IDHome from './IDHome';
 
 // export const reducer = combineReducers({
 //   count: count,
@@ -24,6 +27,9 @@ const store = configureStore({
     lampKitchen: lampKitchen,
     lampBedRoom: lampBedroom,
     lampBathRoom: lampBathroom,
+    dataUser: dataUser,
+    freezer: freezer,
+    IDHome: IDHome,
   },
 });
 

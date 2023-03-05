@@ -17,12 +17,14 @@ import {isValidSdt, isValidPass} from '../../Validation/Validate';
 import {background, image, home, pass} from '../../image/image';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const SignIn = () => {
   const [keyboardIsShown, setKeyBoardIsShown] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => {
       setKeyBoardIsShown(true);
@@ -60,6 +62,30 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [pwHidden, setpwHidden] = useState(true);
   const [iconName, seticonName] = useState('eye-off');
+  const checkSignIn = async (ID, password) => {
+    const res = await fetch(
+      'https://dev-smarthome.onrender.com/api/user/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          username: ID,
+          password: password,
+        }),
+      },
+    );
+    const json = await res.json();
+    if (json.message === 'Login successfully as admin') {
+      alert('Đăng nhập thành công');
+      dispatch({type: 'setDataUser', payload: json.data});
+      navigation.navigate('Dashboard', {user: ID, pass: password});
+    } else {
+      alert(json.message);
+    }
+  };
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -84,7 +110,7 @@ const SignIn = () => {
               }}
               style={[styles.input, {paddingRight: 50}]}
               placeholder="ID"
-              keyboardType="numeric"
+              // keyboardType="numeric"
               placeholderTextColor={'black'}
             />
           </View>
@@ -154,10 +180,9 @@ const SignIn = () => {
                   isValidSdt(ID) === 0 &&
                   isValidPass(password) !== 1
                 ) {
-                  alert('Đăng nhập thành công');
-                  navigation.navigate('Dashboard', {user: ID, pass: password});
-                } else {
-                  alert('Đăng nhập thất bại');
+                  checkSignIn(ID, password);
+                  // alert('Đăng nhập thành công');
+                  // navigation.navigate('Dashboard', {user: ID, pass: password});
                 }
               }}>
               <View

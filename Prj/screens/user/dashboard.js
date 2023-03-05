@@ -44,41 +44,58 @@ const Dashboard = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const data = useSelector(state => state.setData);
+  const dataUser = useSelector(state => state.dataUser);
   const showMenu = useSelector(state => state.showMenu);
   const color = useSelector(state => state.color);
   const [dataFetch, setData] = useState({});
   const [dataAllRooms, setDataAllRooms] = useState([]);
-  async function getHome() {
-    const requestUrl =
-      'https://dev-smarthome.onrender.com/api/home/63fcb8c250d662e4f644fb64';
+  const [dataAllHome, setDataAllHome] = useState([]);
+  const IDHome = useSelector(state => state.IDHome);
+  const token = dataUser.token;
+  // console.log(token)
+  async function getAllHome() {
+    const requestUrl = 'https://dev-smarthome.onrender.com/api/home';
     const response = await fetch(requestUrl, {
       method: 'get',
       headers: {
         'Content-type': 'application/json',
         Accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const responseJson = await response.json();
+    return responseJson;
+  }
+  async function getHome() {
+    const requestUrl = `https://dev-smarthome.onrender.com/api/home/${IDHome}`;
+    const response = await fetch(requestUrl, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     });
     const responseJson = await response.json();
     return responseJson;
   }
   async function getAllRoom() {
-    const requestUrl =
-      'https://dev-smarthome.onrender.com/api/home/63fcb8c250d662e4f644fb64/rooms';
+    const requestUrl = `https://dev-smarthome.onrender.com/api/home/${IDHome}/rooms`;
     const response = await fetch(requestUrl, {
       method: 'get',
       headers: {
         'Content-type': 'application/json',
         Accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk',
+        Authorization: `Bearer ${token}`,
       },
     });
     const responseJson = await response.json();
     return responseJson;
   }
   useEffect(() => {
+    getAllHome()
+      .then(result => setDataAllHome(result))
+      .catch(error => console.log('error', error));
     getHome()
       .then(result => setData(result))
       .catch(error => console.log('error', error));
@@ -89,7 +106,21 @@ const Dashboard = props => {
   useEffect(() => {
     console.log('dataHome', dataFetch);
   }, [dataFetch]);
+  useEffect(() => {
+    // let dataHomeTemp = dataAllHome.filter(data => {
+    //   return data.code === dataUser.user.username;
+    // });
+    //   setIDHome(dataHomeTemp._id);
+    for (let i = 0; i < dataAllHome.length; i++) {
+      if (dataAllHome[i].code === dataUser.user.username) {
+        console.log(dataAllHome[i]);
+        dispatch({type: 'setIDHome', payload: dataAllHome[i]._id});
+      }
+    }
+  }, [dataAllHome]);
+  // console.log('idhome', IDHome);
   useLayoutEffect(() => {
+    console.log('dataAllRooms', dataAllRooms);
     if (dataAllRooms.length > 0) {
       for (let i = 0; i < dataAllRooms.length; i++) {
         if (dataAllRooms[i]?.desc === 'Livingroom') {
@@ -194,7 +225,7 @@ const Dashboard = props => {
             marginBottom: 20,
             width: 210,
           }}>
-          {dataFetch.name}
+          {dataUser.user.name}
         </Text>
         <TouchableOpacity
           style={{
@@ -215,7 +246,7 @@ const Dashboard = props => {
         </TouchableOpacity>
         <View style={{paddingTop: 30, width: 215}}>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
-            {lang === 'vn' ? 'Họ và tên' : 'Fullname'} : {dataFetch.name}
+            {lang === 'vn' ? 'Họ và tên' : 'Fullname'} : {dataUser.user.name}
           </Text>
           <Text style={{fontSize: 13, color: 'black', marginBottom: 20}}>
             {lang === 'vn' ? 'Số điện thoại' : 'Telephone'} : 0904443580
@@ -224,7 +255,7 @@ const Dashboard = props => {
             {lang === 'vn' ? 'Địa chỉ' : 'Address'} : {dataFetch.address}
           </Text>
           <Text style={{fontSize: 13, color: 'black'}}>
-            Email : quocanhvu16@gmail.com
+            Email : {dataUser.user.email}
           </Text>
         </View>
       </View>
@@ -325,7 +356,7 @@ const Dashboard = props => {
                     color: color.textLightColor,
                     fontWeight: 'bold',
                   }}>
-                  {dataFetch?.name}
+                  {dataUser.user.name}
                 </Text>
               </View>
             </View>
@@ -446,9 +477,10 @@ const Dashboard = props => {
                 flexWrap: 'wrap',
                 height: 170,
               }}>
-              {dataAllRooms?.map((room, index) => {
-                return <Room data={room} key={index} />;
-              })}
+              {dataAllRooms !== [] &&
+                dataAllRooms.map((room, index) => {
+                  return <Room data={room} key={index} />;
+                })}
             </View>
           </ScrollView>
           <LinearGradient

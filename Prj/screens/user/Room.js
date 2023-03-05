@@ -59,7 +59,7 @@ const Room = props => {
   const [refrigerator, setRefrigerator] = useState(false);
   const [washingMachine, setWashingMachine] = useState(false);
   async function turnOffLed() {
-    console.log('Tat den');
+    // console.log('Tat den');
     const requestUrl =
       'https://dev-smarthome.onrender.com/api/adruino/turn-off-led';
     const response = await fetch(requestUrl, {
@@ -73,7 +73,7 @@ const Room = props => {
     });
   }
   async function turnOnLed() {
-    console.log('Bat den');
+    // console.log('Bat den');
     const requestUrl =
       'https://dev-smarthome.onrender.com/api/adruino/turn-on-led';
     const response = await fetch(requestUrl, {
@@ -86,14 +86,35 @@ const Room = props => {
       },
     });
   }
-  useEffect(() => {
-    if (lamp === false) {
-      turnOffLed();
-    }
-    if (lamp === true) {
-      turnOnLed();
-    }
-  }, [lamp]);
+  async function turnOnFreezer() {
+      // console.log('Bật tủ lạnh');
+    const requestUrl =
+      'https://dev-smarthome.onrender.com/api/adruino/turn-on-freezer';
+    const response = await fetch(requestUrl, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlNjMyYzczYmRjYzJlMDg2ZGJiMCIsImlhdCI6MTY3MTg0ODM2Nn0.QLZsHyTQwhx5KHyXiUDUdcHfDaKGm_il8CcfJY1FKSk',
+      },
+    });
+  }
+  async function turnOffFreezer() {
+    // console.log('Tắt tủ lạnh');
+    setTimeout(() => {
+      setRefrigerator(() => {
+        const refrigeratorTemp = refrigerator;
+        console.log(refrigeratorTemp);
+        dispatch({
+          type: 'changeFreezer',
+          payload: refrigeratorTemp,
+        });
+        return refrigeratorTemp;
+      });
+    }, 5000);
+  }
+
   useEffect(() => {
     if (lang === 'vn') {
       if (dataRoom.name === 'Living Room') {
@@ -142,16 +163,48 @@ const Room = props => {
 
   useLayoutEffect(() => {
     if (dataRoom?.desc === 'Livingroom') {
-      setLamp(lampLivingroom);
+      setLamp(() => {
+        if (lampLivingroom === true) {
+          turnOnLed();
+        }
+        if (lampLivingroom === false) {
+          turnOffLed();
+        }
+        return lampLivingroom;
+      });
     }
     if (dataRoom?.desc === 'Bedroom') {
-      setLamp(lampBedroom);
+      setLamp(() => {
+        if (lampBedroom === true) {
+          turnOnLed();
+        }
+        if (lampBedroom === false) {
+          turnOffLed();
+        }
+        return lampBedroom;
+      });
     }
     if (dataRoom?.desc === 'Bathroom') {
-      setLamp(lampBathroom);
+      setLamp(() => {
+        if (lampBathroom === true) {
+          turnOnLed();
+        }
+        if (lampBathroom === false) {
+          turnOffLed();
+        }
+        return lampBathroom;
+      });
     }
     if (dataRoom?.desc === 'Kitchen') {
-      setLamp(lampKitchen);
+      setLamp(() => {
+        if (lampKitchen === true) {
+          turnOnLed();
+        }
+        if (lampKitchen === false) {
+          turnOffLed();
+        }
+        return lampKitchen;
+      });
     }
   }, [dataRoom]);
   return (
@@ -488,6 +541,13 @@ const Room = props => {
                             }
                             return lampTemp;
                           });
+
+                          if (lamp === true) {
+                            turnOffLed();
+                          }
+                          if (lamp === false) {
+                            turnOnLed();
+                          }
                         }}>
                         <LinearGradient
                           colors={
@@ -870,7 +930,22 @@ const Room = props => {
                         <TuLanhOn width={42} height={42} />
                       )}
                       <TouchableOpacity
-                        onPress={() => setRefrigerator(!refrigerator)}>
+                        onPress={() => {
+                          setRefrigerator(() => {
+                            const refrigeratorTemp = !refrigerator;
+                            if (dataRoom.desc === 'Kitchen') {
+                              dispatch({
+                                type: 'changeFreezer',
+                                payload: refrigeratorTemp,
+                              });
+                            }
+                            return refrigeratorTemp;
+                          });
+                          if (refrigerator === false) {
+                            turnOnFreezer();
+                          }
+                          turnOffFreezer();
+                        }}>
                         <LinearGradient
                           colors={
                             refrigerator === false
