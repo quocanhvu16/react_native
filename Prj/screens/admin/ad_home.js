@@ -27,7 +27,7 @@ const Ad_Home = (props) => {
 
     useEffect(() => {
         fetchRooms();
-        setDesc('LivingRoom')
+        setDesc('Livingroom')
         setName('')
     },[tmp])
 
