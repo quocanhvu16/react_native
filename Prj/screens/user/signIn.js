@@ -17,7 +17,7 @@ import {isValidSdt, isValidPass} from '../../Validation/Validate';
 import {background, image, home, pass} from '../../image/image';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -25,6 +25,7 @@ const windowHeight = Dimensions.get('window').height;
 const SignIn = () => {
   const [keyboardIsShown, setKeyBoardIsShown] = useState(false);
   const dispatch = useDispatch();
+  const infor = useSelector(state => state.infor);
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => {
       setKeyBoardIsShown(true);
@@ -62,6 +63,16 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [pwHidden, setpwHidden] = useState(true);
   const [iconName, seticonName] = useState('eye-off');
+  // useEffect(() => {
+  //   setID(infor.ID);
+  //   setPassword(infor.password);
+  // }, []);
+  // useEffect(() => {
+  //   console.log(ID);
+  // }, [ID]);
+  // useEffect(() => {
+  //   console.log(password);
+  // }, [password]);
   const checkSignIn = async (ID, password) => {
     const res = await fetch(
       'https://dev-smarthome.onrender.com/api/user/login',
@@ -78,10 +89,10 @@ const SignIn = () => {
       },
     );
     const json = await res.json();
-    if (json.message === 'Login successfully as admin') {
+    if (json.message === 'Login successfully ') {
       alert('Đăng nhập thành công');
       dispatch({type: 'setDataUser', payload: json.data});
-      navigation.navigate('Dashboard', {user: ID, pass: password});
+      navigation.navigate('Dashboard');
     } else {
       alert(json.message);
     }
@@ -110,8 +121,8 @@ const SignIn = () => {
               }}
               style={[styles.input, {paddingRight: 50}]}
               placeholder="ID"
-              // keyboardType="numeric"
               placeholderTextColor={'black'}
+              // defaultValue={infor.ID}
             />
           </View>
           {keyboardIsShown == false && (
@@ -130,6 +141,7 @@ const SignIn = () => {
               style={[styles.input, {paddingRight: 50}]}
               placeholder="Mật Khẩu"
               placeholderTextColor={'black'}
+              // defaultValue={infor.password}
             />
             <TouchableOpacity
               style={{

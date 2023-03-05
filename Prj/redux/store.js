@@ -11,6 +11,7 @@ import lampBathroom from './lampBathroom';
 import dataUser from './dataUser';
 import freezer from './freezer';
 import IDHome from './IDHome';
+import infor from './infor';
 
 // export const reducer = combineReducers({
 //   count: count,
@@ -30,6 +31,7 @@ const store = configureStore({
     dataUser: dataUser,
     freezer: freezer,
     IDHome: IDHome,
+    infor: infor,
   },
 });
 

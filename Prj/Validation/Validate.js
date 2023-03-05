@@ -1,5 +1,7 @@
 export const isValidSdt = sdt => {
-  if (sdt.length === 0) {
+  if (sdt === undefined) {
+    return 1;
+  } else if (sdt.length === 0) {
     return 1;
   } else {
     return 0;
@@ -7,6 +9,9 @@ export const isValidSdt = sdt => {
 };
 export const isValidPass = password => {
   const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g;
+  if (password === undefined) {
+    return 1;
+  }
   if (password.length === 0) {
     return 1;
   }

@@ -22,12 +22,14 @@ import {
   isValidMail,
 } from '../../Validation/Validate';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const SignUp = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   // useEffect(() => {
   //   const backAction = () => {
   //     Alert.alert('Thoát!', 'Bạn có chắc chắn muốn thoát ứng dụng?', [
@@ -95,6 +97,7 @@ const SignUp = () => {
       alert(json.message);
     } else {
       alert('Đăng ký thành công');
+      dispatch({type: 'setInfor', payload: {ID: ID, password: password}});
       navigation.navigate('SignIn');
     }
     // alert('Đăng ký thành công');

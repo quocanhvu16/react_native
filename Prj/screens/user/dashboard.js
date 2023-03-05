@@ -50,7 +50,7 @@ const Dashboard = props => {
   const [dataFetch, setData] = useState({});
   const [dataAllRooms, setDataAllRooms] = useState([]);
   const [dataAllHome, setDataAllHome] = useState([]);
-  const IDHome = useSelector(state => state.IDHome);
+  // const IDHome = useSelector(state => state.IDHome);
   const token = dataUser.token;
   // console.log(token)
   async function getAllHome() {
@@ -67,7 +67,7 @@ const Dashboard = props => {
     return responseJson;
   }
   async function getHome() {
-    const requestUrl = `https://dev-smarthome.onrender.com/api/home/${IDHome}`;
+    const requestUrl = `https://dev-smarthome.onrender.com/api/home/${dataUser.user.home}`;
     const response = await fetch(requestUrl, {
       method: 'get',
       headers: {
@@ -80,7 +80,8 @@ const Dashboard = props => {
     return responseJson;
   }
   async function getAllRoom() {
-    const requestUrl = `https://dev-smarthome.onrender.com/api/home/${IDHome}/rooms`;
+    // console.log('IDHOme', IDHome);
+    const requestUrl = `https://dev-smarthome.onrender.com/api/home/${dataUser.user.home}/rooms`;
     const response = await fetch(requestUrl, {
       method: 'get',
       headers: {
@@ -92,10 +93,11 @@ const Dashboard = props => {
     const responseJson = await response.json();
     return responseJson;
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    getAllHome()
-      .then(result => setDataAllHome(result))
-      .catch(error => console.log('error', error));
+    // await getAllHome()
+    //   .then(result => setDataAllHome(result))
+    //   .catch(error => console.log('error', error));
     getHome()
       .then(result => setData(result))
       .catch(error => console.log('error', error));
@@ -103,22 +105,16 @@ const Dashboard = props => {
       .then(result => setDataAllRooms(result))
       .catch(error => console.log('error', error));
   }, []);
-  useEffect(() => {
-    console.log('dataHome', dataFetch);
-  }, [dataFetch]);
-  useEffect(() => {
-    // let dataHomeTemp = dataAllHome.filter(data => {
-    //   return data.code === dataUser.user.username;
-    // });
-    //   setIDHome(dataHomeTemp._id);
-    for (let i = 0; i < dataAllHome.length; i++) {
-      if (dataAllHome[i].code === dataUser.user.username) {
-        console.log(dataAllHome[i]);
-        dispatch({type: 'setIDHome', payload: dataAllHome[i]._id});
-      }
-    }
-  }, [dataAllHome]);
-  // console.log('idhome', IDHome);
+  // useEffect(() => {
+  //   // console.log('dataHome', dataFetch);
+  // }, [dataFetch]);
+  // useEffect(() => {
+  //   for (let i = 0; i < dataAllHome.length; i++) {
+  //     if (dataAllHome[i].code === dataUser.user.username) {
+  //       dispatch({type: 'setIDHome', payload: dataAllHome[i]._id});
+  //     }
+  //   }
+  // }, [dataAllHome]);
   useLayoutEffect(() => {
     console.log('dataAllRooms', dataAllRooms);
     if (dataAllRooms.length > 0) {
@@ -178,7 +174,6 @@ const Dashboard = props => {
       backAction,
     );
     return () => {
-      // console.log(backHandler);
       backHandler.remove();
     };
     // }
@@ -477,10 +472,9 @@ const Dashboard = props => {
                 flexWrap: 'wrap',
                 height: 170,
               }}>
-              {dataAllRooms !== [] &&
-                dataAllRooms.map((room, index) => {
-                  return <Room data={room} key={index} />;
-                })}
+              {dataAllRooms?.map((room, index) => {
+                return <Room data={room} key={index} />;
+              })}
             </View>
           </ScrollView>
           <LinearGradient
