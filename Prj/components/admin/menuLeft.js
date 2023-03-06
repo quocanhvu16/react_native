@@ -8,7 +8,7 @@ import Constants from 'Prj/constants'
 
 const MenuLeft = (props) => {
     const [menuModal, setMenuModal] = useState(false);
-    const [isDashboard, setIsDashboard] = useState(true);
+    // const [isDashboard, setIsDashboard] = useState(props.page == "Dashboard" ? true : false);
     const [signOutModal, setSignOutModal] = useState(false);
 
     function showMenuLeft(){
@@ -25,24 +25,26 @@ const MenuLeft = (props) => {
                         </View>
                         <View>
                             <TouchableOpacity 
-                                disabled={isDashboard ? true : false }
+                                disabled={props.page == "Dashboard"  ? true : false }
                                 onPress={() =>{
-                                    setIsDashboard(true)
+                                    // setIsDashboard(true)
+                                    setMenuModal(false)
                                     props.navigation.navigate('Ad_Dasboard')
                                 }}
-                                style={[styles.item, {backgroundColor: isDashboard ? Constants.theme_color : 'white'}]}>
-                                <AntDesign style={{ marginLeft: 40 }} name='dashboard' size={26} color={ isDashboard ? 'white' : 'black'}/>
-                                <Text style={{ marginLeft: 20, color: isDashboard ? 'white' : 'black', fontSize: 18 }}>Dasboard</Text>
+                                style={[styles.item, {backgroundColor: props.page == "Dashboard"  ? Constants.theme_color : 'white'}]}>
+                                <AntDesign style={{ marginLeft: 40 }} name='dashboard' size={26} color={ props.page == "Dashboard" ? 'white' : 'black'}/>
+                                <Text style={{ marginLeft: 20, color: props.page == "Dashboard"  ? 'white' : 'black', fontSize: 18 }}>Dasboard</Text>
                             </TouchableOpacity>
                             <TouchableOpacity 
-                                disabled={isDashboard ? false : true }
+                                disabled={props.page == "Dashboard" ? false : true }
                                 onPress={() => {
-                                    setIsDashboard(false)
+                                    // setIsDashboard(false)
+                                    setMenuModal(false)
                                     props.navigation.navigate('Statistic')
                                 }}
-                                style={ [styles.item, {backgroundColor: isDashboard ? 'white' : Constants.theme_color}]}>
-                                <Ionicons style={{ marginLeft: 40 }} name='md-stats-chart-outline' size={26} color={ isDashboard ? 'black' : 'white'}/>
-                                <Text style={{ marginLeft: 20, color: isDashboard ? 'black' : 'white', fontSize: 18 }}>Thống kê</Text>
+                                style={ [styles.item, {backgroundColor: props.page == "Dashboard"  ? 'white' : Constants.theme_color}]}>
+                                <Ionicons style={{ marginLeft: 40 }} name='md-stats-chart-outline' size={26} color={ props.page == "Dashboard" ? 'black' : 'white'}/>
+                                <Text style={{ marginLeft: 20, color: props.page == "Dashboard"  ? 'black' : 'white', fontSize: 18 }}>Thống kê</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={ styles.item } onPress={() => setSignOutModal(!signOutModal)}>
                                 <Ionicons style={{ marginLeft: 40 }} name='log-out-outline' size={26} color='red'/>

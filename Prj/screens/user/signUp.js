@@ -118,14 +118,16 @@ const SignUp = () => {
         <View style={{marginTop: 30, marginHorizontal: 30}}>
           <View style={styles.input_text}>
             <Image source={user} style={styles.icon} />
-            <TextInput
-              style={styles.input}
-              onChangeText={text => {
-                setName(text);
-              }}
-              placeholder="Họ và tên"
-              placeholderTextColor={'gray'}
-            />
+            <View style={[styles.input]}>
+              <TextInput
+                style={{ color: 'black', width: '85%'}}
+                onChangeText={text => {
+                  setName(text);
+                }}
+                placeholder="Họ và tên"
+                placeholderTextColor={'gray'}
+              />
+            </View>
           </View>
           {keyboardIsShown == false && (
             <View style={{marginVertical: 5, marginLeft: 25}}>
@@ -135,14 +137,16 @@ const SignUp = () => {
           {keyboardIsShown == true && <View style={{height: 10}} />}
           <View style={styles.input_text}>
             <Image source={home} style={styles.icon} />
-            <TextInput
-              onChangeText={text => {
-                setID(text);
-              }}
-              style={styles.input}
-              placeholder="ID"
-              placeholderTextColor={'gray'}
-            />
+            <View style={[styles.input]}>
+              <TextInput
+                onChangeText={text => {
+                  setID(text);
+                }}
+                style={{ color: 'black', width: '85%'}}
+                placeholder="ID"
+                placeholderTextColor={'gray'}
+              />
+            </View>
           </View>
           {keyboardIsShown == false && (
             <View style={{marginVertical: 5, marginLeft: 25}}>
@@ -157,14 +161,16 @@ const SignUp = () => {
               color="#333"
               style={{marginRight: 0, marginTop: 7}}
             />
-            <TextInput
-              onChangeText={text => {
-                setMail(text);
-              }}
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor={'gray'}
-            />
+            <View style={[styles.input]}>
+              <TextInput
+                onChangeText={text => {
+                  setMail(text);
+                }}
+                style={{ color: 'black', width: '85%'}}
+                placeholder="Email"
+                placeholderTextColor={'gray'}
+              />
+            </View>
           </View>
           {keyboardIsShown == false && (
             <View style={{marginVertical: 5, marginLeft: 25}}>
@@ -174,33 +180,24 @@ const SignUp = () => {
           {keyboardIsShown == true && <View style={{height: 10}} />}
           <View style={styles.input_text}>
             <Image source={pass} style={styles.icon} />
-            <TextInput
-              onChangeText={text => {
-                setPassword(text);
-              }}
-              secureTextEntry={pwHidden1 ? true : false}
-              style={styles.input}
-              placeholder="Mật Khẩu"
-              placeholderTextColor={'gray'}
-            />
-            <TouchableOpacity
-              style={{
-                width: 35,
-                height: 35,
-                resizeMode: 'stretch',
-                position: 'absolute',
-                marginLeft: windowWidth - 100,
-                justifyContent: 'center',
-                alignItems: 'center',
-                right: 5,
-                top: 2,
-              }}
-              onPress={() => {
-                setpwHidden1(!pwHidden1);
-                seticonName1(pwHidden1 === true ? 'eye' : 'eye-off');
-              }}>
-              <Icon name={iconName1} size={20} color={'black'} />
-            </TouchableOpacity>
+            <View style={[styles.input]}>
+              <TextInput
+                onChangeText={text => {
+                  setPassword(text);
+                }}
+                secureTextEntry={pwHidden1 ? true : false}
+                style={{ color: 'black', width: '85%'}}
+                placeholder="Mật Khẩu"
+                placeholderTextColor={'gray'}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  setpwHidden1(!pwHidden1);
+                  seticonName1(pwHidden1 === true ? 'eye' : 'eye-off');
+                }}>
+                <Icon name={iconName1} size={20} color={'black'} />
+              </TouchableOpacity>
+            </View>
           </View>
           {keyboardIsShown == false && (
             <View style={{marginVertical: 5, marginLeft: 25}}>
@@ -210,33 +207,24 @@ const SignUp = () => {
           {keyboardIsShown == true && <View style={{height: 10}} />}
           <View style={styles.input_text}>
             <Image source={retypepass} style={styles.icon} />
-            <TextInput
-              onChangeText={text => {
-                setretyPassword(text);
-              }}
-              secureTextEntry={pwHidden2 ? true : false}
-              style={styles.input}
-              placeholder="Nhập lại mật khẩu"
-              placeholderTextColor={'gray'}
-            />
-            <TouchableOpacity
-              style={{
-                width: 35,
-                height: 35,
-                resizeMode: 'stretch',
-                position: 'absolute',
-                marginLeft: windowWidth - 100,
-                justifyContent: 'center',
-                alignItems: 'center',
-                right: 5,
-                top: 2,
-              }}
-              onPress={() => {
-                setpwHidden2(!pwHidden2);
-                seticonName2(pwHidden2 === true ? 'eye' : 'eye-off');
-              }}>
-              <Icon name={iconName2} size={20} color={'black'} />
-            </TouchableOpacity>
+            <View style={[styles.input]}>
+              <TextInput
+                onChangeText={text => {
+                  setretyPassword(text);
+                }}
+                secureTextEntry={pwHidden2 ? true : false}
+                style={{ color: 'black', width: '85%'}}
+                placeholder="Nhập lại mật khẩu"
+                placeholderTextColor={'gray'}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  setpwHidden2(!pwHidden2);
+                  seticonName2(pwHidden2 === true ? 'eye' : 'eye-off');
+                }}>
+                <Icon name={iconName2} size={20} color={'black'} />
+              </TouchableOpacity>
+            </View>
           </View>
           {keyboardIsShown == false && (
             <View style={{marginVertical: 10, marginLeft: 25}}>
@@ -365,9 +353,11 @@ const styles = StyleSheet.create({
     height: 40,
     width: 270,
     borderWidth: 1,
-    padding: 10,
+    paddingHorizontal: 10,
     backgroundColor: '#e6e6e6',
-    color: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderRadius: 10,
   },
   input_text: {

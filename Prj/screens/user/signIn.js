@@ -116,15 +116,18 @@ const SignIn = (props) => {
           }}>
           <View style={styles.input_text}>
             <Image source={home} style={styles.icon} />
-            <TextInput
-              onChangeText={text => {
-                setID(text);
-              }}
-              style={[styles.input, {paddingRight: 50}]}
-              placeholder="ID"
-              placeholderTextColor={'black'}
-              defaultValue={ID}
-            />
+            <View style={[styles.input]}>
+              <TextInput
+                onChangeText={text => {
+                  setID(text);
+                }}
+                // style={[styles.input, {paddingRight: 50}]}
+                style={{ color: 'black', width: '85%'}}
+                placeholder="ID"
+                placeholderTextColor={'black'}
+                defaultValue={ID}
+              />
+            </View>
           </View>
           {keyboardIsShown == false && (
             <View style={{marginVertical: 10, marginLeft: 25}}>
@@ -134,34 +137,25 @@ const SignIn = (props) => {
           {keyboardIsShown == true && <View style={{height: 10}} />}
           <View style={styles.input_text}>
             <Image source={pass} style={styles.icon} />
-            <TextInput
-              onChangeText={text => {
-                setPassword(text);
-              }}
-              secureTextEntry={pwHidden ? true : false}
-              style={[styles.input, {paddingRight: 50}]}
-              placeholder="Mật Khẩu"
-              placeholderTextColor={'black'}
-              defaultValue={password}
-            />
-            <TouchableOpacity
-              style={{
-                width: 35,
-                height: 35,
-                resizeMode: 'stretch',
-                position: 'absolute',
-                marginLeft: windowWidth - 100,
-                justifyContent: 'center',
-                alignItems: 'center',
-                right: 5,
-                top: 2,
-              }}
-              onPress={() => {
-                setpwHidden(!pwHidden);
-                seticonName(pwHidden === true ? 'eye' : 'eye-off');
-              }}>
-              <Icon name={iconName} size={20} color={'black'} />
-            </TouchableOpacity>
+            <View style={[styles.input]}>
+              <TextInput
+                onChangeText={text => {
+                  setPassword(text);
+                }}
+                secureTextEntry={pwHidden ? true : false}
+                style={{ color: 'black', width: '85%'}}
+                placeholder="Mật Khẩu"
+                placeholderTextColor={'black'}
+                defaultValue={password}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  setpwHidden(!pwHidden);
+                  seticonName(pwHidden === true ? 'eye' : 'eye-off');
+                }}>
+                <Icon name={iconName} size={20} color={'black'} />
+              </TouchableOpacity>
+            </View>
           </View>
           {keyboardIsShown == false && (
             <View style={{marginTop: 10, marginLeft: 25}}>
@@ -169,7 +163,7 @@ const SignIn = (props) => {
             </View>
           )}
           {keyboardIsShown == true && <View style={{height: 10}} />}
-          <Text style={styles.forgetpass}>Quên mật khẩu ?</Text>
+          {/* <Text style={styles.forgetpass}>Quên mật khẩu ?</Text> */}
         </View>
         {keyboardIsShown == false && (
           <View style={{paddingBottom: 20}}>
@@ -297,10 +291,13 @@ const styles = StyleSheet.create({
     height: 40,
     width: 270,
     borderWidth: 1,
-    padding: 10,
+    // padding: ,
+    paddingHorizontal: 10,
     backgroundColor: '#e6e6e6',
-    color: 'black',
     borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   forgetpass: {
     fontSize: 15,

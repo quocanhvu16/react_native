@@ -149,7 +149,7 @@ const Ad_Dasboard = (props) => {
     return (
         <View style={{ marginHorizontal: 10, marginTop: 20 }}>
             <View style= {{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
-                <MenuLeft navigation={props.navigation}/>
+                <MenuLeft navigation={props.navigation} page={"Dashboard"}/>
                 <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center', color: 'black', flex: 6 }}>List of smart home</Text>
                 <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center' }} onPress={() => setAddHomeModal(!addHomeModal)}>
                     <Icon name='plus-circle' color='black' size={26}/>
