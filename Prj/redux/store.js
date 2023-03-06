@@ -12,6 +12,8 @@ import dataUser from './dataUser';
 import freezer from './freezer';
 import IDHome from './IDHome';
 import infor from './infor';
+import nhietdo from "./nhietdo";
+import doam from "./doam";
 
 // export const reducer = combineReducers({
 //   count: count,
@@ -32,6 +34,8 @@ const store = configureStore({
     freezer: freezer,
     IDHome: IDHome,
     infor: infor,
+    nhietdo: nhietdo,
+    doam: doam,
   },
 });
 

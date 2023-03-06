@@ -26,6 +26,7 @@ import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+// import client from './../../mqtt';
 
 import {
   LineChart,
@@ -40,9 +41,49 @@ const width = Dimensions.get('window').width; //360
 const height = Dimensions.get('window').height; //728
 
 const Dashboard = props => {
+  const dispatch = useDispatch();
+  function fakeHumidity() {
+    let min = 60;
+    let max = 90;
+    let result = Math.floor(Math.random() * (max - min + 1) + min);
+    return result;
+  }
+  function fakeNhietdo() {
+    let min = 20;
+    let max = 35;
+    let result = Math.floor(Math.random() * (max - min + 1) + min);
+    return result;
+  }
+  const [doam, setDoam] = useState(() => {
+    let doamTemp = fakeHumidity();
+    dispatch({type: 'setDoam', payload: doamTemp});
+    return doamTemp;
+  });
+  const [nhietdo, setNhietdo] = useState(() => {
+    let nhietdoTemp = fakeNhietdo();
+    dispatch({type: 'setNhietdo', payload: nhietdoTemp});
+    return nhietdoTemp;
+  });
+  useEffect(() => {
+    setInterval(() => {
+      setDoam(() => {
+        let doamTemp = fakeHumidity();
+        return doamTemp;
+      });
+      setNhietdo(() => {
+        let nhietdoTemp = fakeNhietdo();
+        return nhietdoTemp;
+      });
+    }, 10000);
+  }, []);
+  useEffect(() => {
+    dispatch({type: 'setDoam', payload: doam});
+  }, [doam]);
+  useEffect(() => {
+    dispatch({type: 'setNhietdo', payload: nhietdo});
+  }, [nhietdo]);
   const lang = useSelector(state => state.lang);
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const data = useSelector(state => state.setData);
   const dataUser = useSelector(state => state.dataUser);
   const showMenu = useSelector(state => state.showMenu);
@@ -116,33 +157,32 @@ const Dashboard = props => {
   //   }
   // }, [dataAllHome]);
   useLayoutEffect(() => {
-    console.log('dataAllRooms', dataAllRooms);
     if (dataAllRooms.length > 0) {
       for (let i = 0; i < dataAllRooms.length; i++) {
         if (dataAllRooms[i]?.desc === 'Livingroom') {
-          dataAllRooms[i].humidity = 60;
-          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].humidity = doam;
+          dataAllRooms[i].temperature = nhietdo;
           dataAllRooms[i].lamp = false;
           dataAllRooms[i].airConditioner = false;
           dataAllRooms[i].smartTv = false;
           dataAllRooms[i].router = false;
         }
         if (dataAllRooms[i]?.desc === 'Kitchen') {
-          dataAllRooms[i].humidity = 60;
-          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].humidity = doam;
+          dataAllRooms[i].temperature = nhietdo;
           dataAllRooms[i].lamp = false;
           dataAllRooms[i].refrigerator = false;
         }
         if (dataAllRooms[i]?.desc === 'Bedroom') {
-          dataAllRooms[i].humidity = 60;
-          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].humidity = doam;
+          dataAllRooms[i].temperature = nhietdo;
           dataAllRooms[i].lamp = false;
           dataAllRooms[i].airConditioner = false;
           dataAllRooms[i].smartTv = false;
         }
         if (dataAllRooms[i]?.desc === 'Bathroom') {
-          dataAllRooms[i].humidity = 60;
-          dataAllRooms[i].temperature = 20;
+          dataAllRooms[i].humidity = doam;
+          dataAllRooms[i].temperature = nhietdo;
           dataAllRooms[i].lamp = false;
           dataAllRooms[i].washingMachine = false;
         }

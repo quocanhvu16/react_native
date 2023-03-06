@@ -39,6 +39,8 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Room = props => {
+  const nhietdo = useSelector(state => state.nhietdo);
+  const doam = useSelector(state => state.doam);
   const navigation = useNavigation();
   const lang = useSelector(state => state.lang);
   const color = useSelector(state => state.color);
@@ -87,7 +89,7 @@ const Room = props => {
     });
   }
   async function turnOnFreezer() {
-      // console.log('Bật tủ lạnh');
+    // console.log('Bật tủ lạnh');
     const requestUrl =
       'https://dev-smarthome.onrender.com/api/adruino/turn-on-freezer';
     const response = await fetch(requestUrl, {
@@ -105,7 +107,7 @@ const Room = props => {
     setTimeout(() => {
       setRefrigerator(() => {
         const refrigeratorTemp = refrigerator;
-        console.log(refrigeratorTemp);
+        // console.log(refrigeratorTemp);
         dispatch({
           type: 'changeFreezer',
           payload: refrigeratorTemp,
@@ -320,7 +322,6 @@ const Room = props => {
                 <TouchableOpacity
                   onPress={() => {
                     dispatch({type: 'setData', payload: data});
-                    console.log(data);
                   }}
                   style={{
                     height: 32,
@@ -404,7 +405,7 @@ const Room = props => {
                   fontFamily: 'Roboto-Thin',
                   fontWeight: color.fontWeight,
                 }}>
-                {dataRoom.temperature}&deg;C{' '}
+                {nhietdo}&deg;C{' '}
               </Text>
               <Text
                 style={{
@@ -452,7 +453,7 @@ const Room = props => {
                   fontFamily: 'Roboto-Thin',
                   fontWeight: color.fontWeight,
                 }}>
-                {dataRoom.humidity} %{' '}
+                {doam} %{' '}
               </Text>
               <Text
                 style={{

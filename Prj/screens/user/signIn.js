@@ -22,7 +22,7 @@ import {useDispatch, useSelector} from 'react-redux';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const SignIn = (props) => {
+const SignIn = props => {
   const [keyboardIsShown, setKeyBoardIsShown] = useState(false);
   const dispatch = useDispatch();
   const infor = useSelector(state => state.infor);
@@ -59,20 +59,24 @@ const SignIn = (props) => {
   const [IDErr, setIDErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
   //states to store sdt, pass
-  const [ID, setID] = useState(props.route.params ? props.route.params.user : '' );
-  const [password, setPassword] = useState(props.route.params ? props.route.params.password : '');
+  const [ID, setID] = useState(
+    props.route.params ? props.route.params.user : '',
+  );
+  const [password, setPassword] = useState(
+    props.route.params ? props.route.params.password : '',
+  );
   const [pwHidden, setpwHidden] = useState(true);
   const [iconName, seticonName] = useState('eye-off');
   // console.log(props.route.params.user)
-  useEffect(() =>{
-    if(props.route.params){
-      setID(props.route.params.user)
-      setPassword(props.route.params.password)
+  useEffect(() => {
+    if (props.route.params) {
+      setID(props.route.params.user);
+      setPassword(props.route.params.password);
     }
-  }, [props.route.params])
+  }, [props.route.params]);
 
   const checkSignIn = async (ID, password) => {
-    console.log(ID, password)
+    console.log(ID, password);
     const res = await fetch(
       'https://dev-smarthome.onrender.com/api/user/login',
       {
@@ -91,9 +95,9 @@ const SignIn = (props) => {
     if (json.message === 'Login successfully ') {
       alert('Đăng nhập thành công');
       dispatch({type: 'setDataUser', payload: json.data});
-      
+
       navigation.navigate('Dashboard');
-      console.log(json.data)
+      console.log(json.data);
     } else {
       alert(json.message);
     }
@@ -122,7 +126,7 @@ const SignIn = (props) => {
                   setID(text);
                 }}
                 // style={[styles.input, {paddingRight: 50}]}
-                style={{ color: 'black', width: '85%'}}
+                style={{color: 'black', width: '85%'}}
                 placeholder="ID"
                 placeholderTextColor={'black'}
                 defaultValue={ID}
@@ -143,7 +147,7 @@ const SignIn = (props) => {
                   setPassword(text);
                 }}
                 secureTextEntry={pwHidden ? true : false}
-                style={{ color: 'black', width: '85%'}}
+                style={{color: 'black', width: '85%'}}
                 placeholder="Mật Khẩu"
                 placeholderTextColor={'black'}
                 defaultValue={password}
@@ -297,7 +301,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   forgetpass: {
     fontSize: 15,
